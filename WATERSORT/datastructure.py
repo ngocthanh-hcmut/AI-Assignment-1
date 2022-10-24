@@ -8,13 +8,19 @@ class Stack:
         print(self.stack)
 
     def push(self,elem):
-        pass
+        self.stack.appendleft(elem)
     
     def pop(self):
-        pass
+        if(self.isEmpty()):
+            return None
+        else:
+            return self.stack.popleft()
     
     def top(self):
-        pass
+        if(self.isEmpty()):
+            return None
+        else:
+            return self.stack[0]
 
     def isEmpty(self):
         if(self.length() >0):
@@ -25,14 +31,6 @@ class Stack:
     def length(self):
         return len(self.stack)
     
-# s1 = Stack((1,2,'hehe'))
-# s1()
-# print(s1.length())
-# print(s1.isEmpty())
-
-
-
-
 
 class Drop:
     def __init__(self,color,length):
@@ -54,24 +52,6 @@ class Drop:
     def length(self):
         return self.dropColor['len']
         
-# color = 'R'
-# length =10
-# d1 = Drop(color,length)
-# d1()
-# print(d1.dropColor['col'])
-# d1.dropColor['col']='W'
-# d1()
-# d1.dropColor['len']=9
-# d1()
-
-# d1.changeColor('A')
-# d1()
-# d1.changeLength(-4)
-# d1()
-# print(d1.color())
-# print(d1.length())
-
-
 
 class Glass:
     def __init__(self):
