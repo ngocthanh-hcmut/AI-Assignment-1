@@ -117,10 +117,7 @@ class Glass:
             self.capacity =2
         else:
             self.capacity=capacity
-        self.__call__()
         self.initOperate()
-        self.__call__()
-
         
     
     def __call__(self):
@@ -136,6 +133,14 @@ class Glass:
         for color in self.tube():
             print('\t     ',color(),',')
         print('\t}\n}')
+        
+    def isEmpty(self):
+        if(self.tube.isEmpty()){
+            self.isDone=True
+            self.isFull = False
+            return True
+        }
+        return False
         
 
     def initOperate(self):
@@ -171,16 +176,12 @@ class Glass:
             else:
                 self.isDone=False
                 self.isFull=False     
-            self.__call__()
+
             # combine 2 color the same color surrounding
             theNumber = self.numOfColor()
             index = 1
             while(index<theNumber):
                 if(self.tube.getItem(index).color() == self.tube.getItem(index-1).color()):
-                    # print('\n ==================')
-                    # print(self.tube.getItem(index-1), ' === ',self.tube.getItem(index-1)())
-                    # print(self.tube.getItem(index), ' === ',self.tube.getItem(index)())
-                    # print('\n ==================')
                     lenghOfCol = self.tube.getItem(index-1).lengthColor()
                     lenghOfCol += self.tube.getItem(index).lengthColor()
                     self.tube.getItem(index).changeLength(lenghOfCol)
@@ -188,22 +189,7 @@ class Glass:
                     theNumber-=1
                     # continue
                 else:
-                    index+=1
-                    
-            
-            # for i in range(1,theNumber):
-            #     print(i)
-            #     print(self.tube.getItem(i))
-            #     print(self.tube.getItem(i-1))
-                
-            #     if(self.tube.getItem(i).color() == self.tube.getItem(i-1).color()):
-            #         print('-',i)
-            #         lenghOfCol = self.tube.getItem(i-1).lengthColor()
-            #         lenghOfCol += self.tube.getItem(i).lengthColor()
-            #         self.tube.getItem(i).changeLength(lenghOfCol)
-            #         self.tube.removeItem(i-1)
-            
-        
+                    index+=1      
             
     
     def isTheSameColor(self):
@@ -228,6 +214,16 @@ class Glass:
         """Number of color that Glass contain"""
         return self.tube.length()
         
+    def fillingColor(self,fillerGlass):
+        """filling this glass by color in fillerGlass"""
+        if(fillerGlass.levelOfColor==0):
+            return False
+        elif(self.isFull):
+            return False
+        if(self.tube.top().color() != fillerGlass.tube.top().color()):
+            return False
+        
+    
         
         
         
@@ -237,12 +233,13 @@ class Glass:
         
 
         
-d1=Drop('B',2)
-d2=Drop('B',3)
-d3=Drop('B',3)
-d4=Drop('B',1)
+d1=Drop('Green',2)
+d2=Drop('Red',3)
+d3=Drop('Blue',3)
+d4=Drop('Blue',1)
 s1 = Stack([d1,d2,d3,d4])
-g1 = Glass('ahihi',s1,9)
+g1 = Glass('ahihi',s1,10)
+print(g1.fillingColor(g1))
 
 
 
