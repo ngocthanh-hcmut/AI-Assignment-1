@@ -135,11 +135,10 @@ class Glass:
         print('\t}\n}')
         
     def isEmpty(self):
-        if(self.tube.isEmpty()){
+        if(self.tube.isEmpty()):
             self.isDone=True
             self.isFull = False
             return True
-        }
         return False
         
 
