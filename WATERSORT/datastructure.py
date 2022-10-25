@@ -1,5 +1,37 @@
 from collections import deque
 
+
+# Color drop: giọi màu
+class Drop:
+    def __init__(self,color,length=1):
+        self.dropColor={'col':color ,'len':length}
+    
+    def __call__(self):
+        """Return Drop Dictionary"""
+        return self.dropColor
+    
+    def getDrop(self):
+        """Return Drop Dictionary"""
+        return self.dropColor
+    
+    def changeColor(self,color):
+        """change color of Drop"""
+        self.dropColor['col']=color
+    
+    def changeLength(self,length):
+        """change Length of the Drop"""
+        self.dropColor['len'] = length
+    
+    def color(self):
+        """get color of Drop"""
+        return self.dropColor['col']
+    def lengthColor(self):
+        """get Length of the Drop"""
+        return self.dropColor['len']
+  
+
+
+
 # stack data structure
 class Stack:
     def __init__(self,list=[]):
@@ -43,40 +75,31 @@ class Stack:
             return None
         else:
             return self.stack[index]
+        
+    def removeItem(self,index):
+        theNumber = self.length()
+        if(index >=0):
+            if(index>=theNumber):
+                raise Exception("index out of range of index to remove")  
+                return False
+            else:
+                del self.stack[index]
+                return True
+        else:
+            if(index<(-1*theNumber)):
+                raise Exception("index out of range of index to remove")    
+            else:
+                del self.stack[index]
+                return True
+                
+
+        
     
     def length(self):
         """caculate the length of stack"""
         return len(self.stack)
     
     
-# Color drop: giọi màu
-class Drop:
-    def __init__(self,color,length=1):
-        self.dropColor={'col':color ,'len':length}
-    
-    def __call__(self):
-        """Return Drop Dictionary"""
-        return self.dropColor
-    
-    def getDrop(self):
-        """Return Drop Dictionary"""
-        return self.dropColor
-    
-    def changeColor(self,color):
-        """change color of Drop"""
-        self.dropColor['col']=color
-    
-    def changeLength(self,length):
-        """change Length of the Drop"""
-        self.dropColor['len'] = length
-    
-    def color(self):
-        """get color of Drop"""
-        return self.dropColor['col']
-    def lengthColor(self):
-        """get Length of the Drop"""
-        return self.dropColor['len']
-  
 
 
 # Glass contain color
@@ -147,7 +170,40 @@ class Glass:
                 self.isDone=self.isTheSameColor()
             else:
                 self.isDone=False
-                self.isFull=False                
+                self.isFull=False     
+            self.__call__()
+            # combine 2 color the same color surrounding
+            theNumber = self.numOfColor()
+            index = 1
+            while(index<theNumber):
+                if(self.tube.getItem(index).color() == self.tube.getItem(index-1).color()):
+                    # print('\n ==================')
+                    # print(self.tube.getItem(index-1), ' === ',self.tube.getItem(index-1)())
+                    # print(self.tube.getItem(index), ' === ',self.tube.getItem(index)())
+                    # print('\n ==================')
+                    lenghOfCol = self.tube.getItem(index-1).lengthColor()
+                    lenghOfCol += self.tube.getItem(index).lengthColor()
+                    self.tube.getItem(index).changeLength(lenghOfCol)
+                    self.tube.removeItem(index-1)
+                    theNumber-=1
+                    # continue
+                else:
+                    index+=1
+                    
+            
+            # for i in range(1,theNumber):
+            #     print(i)
+            #     print(self.tube.getItem(i))
+            #     print(self.tube.getItem(i-1))
+                
+            #     if(self.tube.getItem(i).color() == self.tube.getItem(i-1).color()):
+            #         print('-',i)
+            #         lenghOfCol = self.tube.getItem(i-1).lengthColor()
+            #         lenghOfCol += self.tube.getItem(i).lengthColor()
+            #         self.tube.getItem(i).changeLength(lenghOfCol)
+            #         self.tube.removeItem(i-1)
+            
+        
             
     
     def isTheSameColor(self):
@@ -179,15 +235,24 @@ class Glass:
         
         
         
-        
-        
+
         
 d1=Drop('B',2)
 d2=Drop('B',3)
-d3=Drop('G',3)
-s1 = Stack([d1,d2,d3])
-s1=Stack()
-s1=Stack([d1,d2])
-g1 = Glass('ahihi',s1,5)
-# print(g1.isTheSameColor())
+d3=Drop('B',3)
+d4=Drop('B',1)
+s1 = Stack([d1,d2,d3,d4])
+g1 = Glass('ahihi',s1,9)
 
+
+
+# s1 = Stack([1,2,3,4,5])
+# for i in range(0,s1.length()):
+#     print(i,' - ',s1.getStackList()[i])
+# s1.removeItem(0)
+# print('\n')
+# for i in range(0,s1.length()):
+#     print(i,' - ',s1.getStackList()[i])    
+# g1=Glass('ahihi',s1,10)
+# print(s1())
+# print("\n")
