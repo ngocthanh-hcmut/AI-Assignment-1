@@ -1,4 +1,5 @@
 from collections import deque
+from operator import truediv
 
 
 # Color drop: giọi màu
@@ -81,7 +82,7 @@ class Stack:
         if(index >=0):
             if(index>=theNumber):
                 raise Exception("index out of range of index to remove")  
-                return False
+            
             else:
                 del self.stack[index]
                 return True
@@ -90,10 +91,7 @@ class Stack:
                 raise Exception("index out of range of index to remove")    
             else:
                 del self.stack[index]
-                return True
-                
-
-        
+                return True             
     
     def length(self):
         """caculate the length of stack"""
@@ -105,19 +103,21 @@ class Stack:
 # Glass contain color
 class Glass:
     def __init__(self,name='',stackColor = Stack(),capacity=2):
-        self.name=name
-        self.capacity =0
-        self.isDone = False
-        self.isFull=False
-        self.levelOfColor=0
-        self.tube = stackColor
+        self.name=name              # the name of glass
+        self.capacity =0            # the capacity of glass
+        self.allTheSame = False     # the variable to show this glass is the same color
+        self.isFull=False           # the variable to show this glass is Full
+        self.levelOfColor=0         # the variable to show the height of color in this glass
+        self.tube = stackColor      # store the stack contain all color.
         
         # init capacity
         if(capacity < 2):
             self.capacity =2
         else:
             self.capacity=capacity
+        # self.__call__()
         self.initOperate()
+        # self.__call__()
         
     
     def __call__(self):
@@ -125,7 +125,7 @@ class Glass:
             '{',
                 '\t','name:',self.name,
                 '\n\t','capacity:', self.capacity,
-                '\n\t','Done:',self.isDone,
+                '\n\t','TheSame:',self.allTheSame,
                 '\n\t','Full:',self.isFull,
                 '\n\t','Level:',self.levelOfColor,
                 '\n\t','tube: {'
@@ -134,30 +134,45 @@ class Glass:
             print('\t     ',color(),',')
         print('\t}\n}')
         
+    def GlassIsFull(self):
+        """Check where the glass is FUll"""
+        theNumber = self.numOfColor()
+        length=0
+        for i in range(0,theNumber):
+            length += self.tube.getItem(i).lengthColor()
+        print(length)
+        if(length> self.capacity):
+            raise Exception("Capacity does not enough space")
+        elif(length == self.capacity):
+            return True
+        else:
+            return False
+        
     def isEmpty(self):
+        """Check whethe the glass is empty"""
         if(self.tube.isEmpty()):
-            self.isDone=True
+            self.allTheSame=True
             self.isFull = False
             return True
         return False
         
-
     def initOperate(self):
         # empty stack.
         numOfCol = self.numOfColor()
         if(numOfCol == 0):
-            self.isDone=True
+            self.allTheSame=True
+            self.isFull = False
             return
         # stack with 1 color:
-        elif(numOfCol ==1 ):
+        elif(numOfCol == 1):
             self.levelOfColor = self.tube.getItem(0).lengthColor()
             if(self.levelOfColor > self.capacity):
                 raise Exception("Capacity does not enough space")
             elif (self.levelOfColor == self.capacity):
-                self.isDone=True
+                self.allTheSame=True
                 self.isFull=True
             else:
-                self.isDone=False
+                self.allTheSame=True
                 self.isFull=False
             return
         # stack with many colors.
@@ -171,10 +186,11 @@ class Glass:
                 raise Exception("Capacity does not enough space")
             elif (self.levelOfColor == self.capacity):
                 self.isFull=True
-                self.isDone=self.isTheSameColor()
+                self.allTheSame=self.isTheSameColor()
             else:
-                self.isDone=False
-                self.isFull=False     
+                self.isFull=False
+                self.allTheSame=self.isTheSameColor()
+            # self.__call__()
 
             # combine 2 color the same color surrounding
             theNumber = self.numOfColor()
@@ -189,8 +205,7 @@ class Glass:
                     # continue
                 else:
                     index+=1      
-            
-    
+             
     def isTheSameColor(self):
         """check whether all the color in glass is the same color.
         If no color or one color => True
@@ -207,8 +222,7 @@ class Glass:
                 if(self.tube.getStackList()[i].color() !=  self.tube.getStackList()[i+1].color()):
                     return False
             return theSame
-            
-            
+                    
     def numOfColor(self):
         """Number of color that Glass contain"""
         return self.tube.length()
@@ -221,6 +235,36 @@ class Glass:
             return False
         if(self.tube.top().color() != fillerGlass.tube.top().color()):
             return False
+    
+    def checkDone(self):
+        """check whether the glass is done.
+        Return True if full and the same or empty 
+        Return false if not full or not the same color"""
+        if(self.numOfColor() == 0):
+            return True
+        else:
+            if(not(self.isTheSameColor())):
+                return False
+            else:
+                thelevel = self.getLevelOfColor()
+                if(thelevel> self.capacity):
+                    raise Exception("Capacity does not enough space")
+                elif(thelevel == self.capacity):
+                    return True
+                else:
+                    return False            
+         
+    def getLevelOfColor(self):
+        numOfCol = self.numOfColor();
+        if(numOfCol == 0 ):
+            return 0
+        elif(numOfCol == 1):
+            return self.tube.getItem(0).lengthColor()
+        else:
+            theLevel = 0
+            for i in range(0,numOfCol):
+                theLevel += self.tube.getItem(i).lengthColor()
+            return theLevel
         
     
         
@@ -232,13 +276,17 @@ class Glass:
         
 
         
-d1=Drop('Green',2)
-d2=Drop('Red',3)
-d3=Drop('Blue',3)
-d4=Drop('Blue',1)
-s1 = Stack([d1,d2,d3,d4])
-g1 = Glass('ahihi',s1,10)
-print(g1.fillingColor(g1))
+d1=Drop('Green',3)
+d2=Drop('Green',7)
+d3=Drop('Green',3)
+d4=Drop('Green',1)
+s1 = Stack([d1,d2,d3])
+g1 = Glass('ahihi',s1,13)
+print('\nDone:',g1.checkDone())
+# s1 = Stack([d1,d2])
+# s1 = Stack([d1])
+# s1 = Stack([d1,d2,d3,d4])
+# print(g1.fillingColor(g1))
 
 
 
