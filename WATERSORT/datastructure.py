@@ -4,6 +4,8 @@ from collections import deque
 # Color drop: giọi màu
 class Drop:
     def __init__(self,color,length=1):
+        if(length <=0):
+            raise Exception("length of Drop must be larger than 0")
         self.dropColor={'col':color ,'len':length}
     
     def __call__(self):
@@ -25,6 +27,7 @@ class Drop:
     def color(self):
         """get color of Drop"""
         return self.dropColor['col']
+    
     def lengthColor(self):
         """get Length of the Drop"""
         return self.dropColor['len']
@@ -139,12 +142,16 @@ class Glass:
         length=0
         for i in range(0,theNumber):
             length += self.tube.getItem(i).lengthColor()
-        print(length)
+        # print(length)
         if(length> self.capacity):
             raise Exception("Capacity does not enough space")
         elif(length == self.capacity):
+            self.isFull = True
+            self.levelOfColor = length
             return True
         else:
+            self.isFull = False
+            self.levelOfColor = length
             return False
         
     def isEmpty(self):
@@ -152,6 +159,7 @@ class Glass:
         if(self.tube.isEmpty()):
             self.allTheSame=True
             self.isFull = False
+            self.levelOfColor = 0
             return True
         return False
         
@@ -212,28 +220,49 @@ class Glass:
         else => false
         Returns:Bool            
         """
-        theSame=True
         theNumber = self.numOfColor()      
         if(theNumber ==0 or theNumber ==1):
-            return theSame
+            self.allTheSame =True
+            return True
         else:
             for i in range(0,theNumber-1):
                 if(self.tube.getStackList()[i].color() !=  self.tube.getStackList()[i+1].color()):
+                    self.allTheSame =False                    
                     return False
-            return theSame
+            self.allTheSame =True
+            return True
                     
     def numOfColor(self):
-        """Number of color that Glass contain"""
+        """the number of colors that Glass is containing"""
         return self.tube.length()
         
     def fillingColor(self,fillerGlass):
-        """filling this glass by color in fillerGlass"""
-        if(fillerGlass.levelOfColor==0):
+        """filling this glass by color in fillerGlass. Return true if filling process succees else return false"""
+        if(fillerGlass.getLevelOfColor()==0 or fillerGlass.isEmpty()  ):   # tillerGlass does not have any colors.
+            print('\n ---Deleted: filler glass does not have colors')
             return False
-        elif(self.isFull):
+        elif(self.GlassIsFull()):   # this glass now is full
+            print('\n ---Deleted: glass now is Full')
             return False
-        if(self.tube.top().color() != fillerGlass.tube.top().color()):
+        elif(not(self.isEmpty()) and (self.tube.top().color() != fillerGlass.tube.top().color()) ):     # this glass is contain colors and available Space but color not match.
+            print('\n ---Deleted: glass contain colors and available space but not match color')
             return False
+        elif( self.isEmpty() ):     # this glass empty but fillerGlass have colors
+            availableSpace = self.capacity          # available space of this Glass 
+            lenColorFilling = fillerGlass.tube.top().lengthColor()
+            
+            if(availableSpace >= lenColorFilling):            
+                insertedDrop = fillerGlass.popOutOfGlass()
+                return self.pushToGlass(insertedDrop)
+            else:       # (availableSpace < lenColorFilling):
+                neededLength = lenColorFilling - availableSpace
+                insertedDrop = fillerGlass.popApartOfTopOutOfGlass(neededLength)
+                if (insertedDrop == None):
+                    return False
+                else:
+                    return self.pushToGlass(insertedDrop)
+                
+        
     
     def checkDone(self):
         """check whether the glass is done.
@@ -256,14 +285,125 @@ class Glass:
     def getLevelOfColor(self):
         numOfCol = self.numOfColor();
         if(numOfCol == 0 ):
+            self.levelOfColor = 0
+            self.allTheSame = True      # ===========================
             return 0
         elif(numOfCol == 1):
-            return self.tube.getItem(0).lengthColor()
+            thelevel = self.tube.getItem(0).lengthColor()
+            self.levelOfColor = thelevel
+            self.allTheSame = True      # ===========================
+            if(self.levelOfColor == self.capacity):
+                self.isFull = True
+            else:
+                self.isFull = False
+            return thelevel
         else:
             theLevel = 0
             for i in range(0,numOfCol):
                 theLevel += self.tube.getItem(i).lengthColor()
+            self.levelOfColor = theLevel
+            if(self.levelOfColor == self.capacity):
+                self.isFull = True
+            else:
+                self.isFull = False            
             return theLevel
+        
+    
+    def topOfGlass(self):
+        """get the top element of glass (Drop object).if Empty return None else: return Drop object at top of this Glass """
+        return self.tube.top()
+    
+    def popOutOfGlass(self):
+        """pop the top Drop object out of Glass. if empty return None else: return the top Drop object and reupdate params"""
+        if(self.isEmpty()):
+            return None
+        else:
+            topObject = self.tube.pop();
+            self.allTheSame = self.isTheSameColor()
+            self.isFull = False
+            self.levelOfColor =self.getLevelOfColor()      # update the levelofcolor param
+            return topObject
+    
+    def popApartOfTopOutOfGlass(self,length):
+        """Pop a part not whole top Drop. if empty or not success return None else return a part of the top"""
+        if(length <= 0 or self.isEmpty() ):
+            return None
+        elif(length == self.topOfGlass().lengthColor()):
+            return self.popOutOfGlass()
+        elif(length > self.topOfGlass().lengthColor()):
+            return None
+        else:
+            topColor = self.topOfGlass().color()
+            topLength = self.topOfGlass().lengthColor()
+            self.topOfGlass().changeLength(topLength - length)
+            self.isFull=False
+            self.levelOfColor -= length
+            neededDrop = Drop(topColor,length)
+            return neededDrop
+            
+            
+    
+    def pushNoCheckNoUpdate(self,insertedDropObject):
+        """push Drop object to Glass. Note that this function is NOT check whether top colors are matching and also space enough and not update params"""
+        self.tube.push(insertedDropObject)
+        
+    def pushToGlass(self,insertedDropObject):
+        """push Drop object to glass. 
+        return True if push success
+        return false if push fail"""
+        if(insertedDropObject.lengthColor()<=0):
+            print('\n ---Deleted: Drop with length <= 0')            
+            return False
+        elif(self.GlassIsFull()):       # glass does not having any space to store color of insertedDropObject        
+            # print('\n ---Deleted: glass is full to inserted')
+            return False        
+        elif(self.isEmpty()):     # glass now is empty
+            if(insertedDropObject.lengthColor()> self.capacity):
+                # glass does not enough space to store color of insertedDropObject
+                # print('\n ---Deleted: glass is empty but drop too large')
+                return False
+            elif (insertedDropObject.lengthColor() == self.capacity): 
+                # print('\n ---Deleted: glass is empty and drop = capacity')
+                self.pushNoCheckNoUpdate(insertedDropObject)
+                self.allTheSame = True
+                self.isFull=True 
+                self.levelOfColor= self.capacity
+                return True
+            else:
+                # print('\n ---Deleted: glass is empty and drop < capacity')
+                self.pushNoCheckNoUpdate(insertedDropObject)
+                self.allTheSame = True
+                self.isFull=False   
+                self.levelOfColor= insertedDropObject.lengthColor()   
+                return True
+        else:       #glass have color but not full
+            if(self.topOfGlass().color() != insertedDropObject.color()):    # color not match
+                # print('\n ---Deleted: glass have color and Space available but color No match')
+                return False
+            else:   # color match
+                availableSpace = self.capacity - self.getLevelOfColor()
+                if(insertedDropObject.lengthColor()> availableSpace):
+                    # glass does not enough space to store color of insertedDropObject
+                    # print('\n ---Deleted: glass have color match and Space available but Drop too large')
+                    return False
+                elif (insertedDropObject.lengthColor() == availableSpace ):
+                    # print('\n ---Deleted: glass have color match and Space available = Drop')
+                    newLengthOfTop = self.topOfGlass().lengthColor() + insertedDropObject.lengthColor()
+                    self.topOfGlass().changeLength(newLengthOfTop)
+                    self.isFull=True
+                    self.levelOfColor= self.capacity
+                    return True
+                else:
+                    # print('\n ---Deleted: glass have color match and Space available > Drop')
+                    newLengthOfTop = self.topOfGlass().lengthColor() + insertedDropObject.lengthColor()
+                    self.topOfGlass().changeLength(newLengthOfTop)
+                    self.isFull=False
+                    self.levelOfColor += insertedDropObject.lengthColor()
+                    return True
+                    
+            
+            
+        
         
     
         
@@ -273,15 +413,49 @@ class Glass:
         
         
         
-
         
-d1=Drop('Green',3)
-d2=Drop('Green',7)
-d3=Drop('Green',3)
-d4=Drop('Green',1)
-s1 = Stack([d1,d2,d3])
-g1 = Glass('ahihi',s1,13)
-print('\nDone:',g1.checkDone())
+        
+
+# d0 = Drop('Red',0)
+# d1=Drop('Red',4)
+# d2=Drop('Blue',1)
+# d3=Drop('Blue',3)
+# d4=Drop('Green',1)
+
+# s1 = Stack([d1,d2])
+# g1 = Glass('ahihi',s1,7)
+
+# g1()
+
+# print('\n')
+# print(g1.popApartOfTopOutOfGlass(-5))
+# print('\n')
+# g1()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# g1()
+# print('\nDone:',g1.checkDone())
+# print('\ntop: ',g1.topOfGlass())
 # s1 = Stack([d1,d2])
 # s1 = Stack([d1])
 # s1 = Stack([d1,d2,d3,d4])
