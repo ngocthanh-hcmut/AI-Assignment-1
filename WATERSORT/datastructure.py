@@ -1,5 +1,4 @@
 from collections import deque
-from operator import truediv
 
 
 # Color drop: giọi màu
