@@ -247,6 +247,20 @@ class Glass:
         elif(not(self.isEmpty()) and (self.tube.top().color() != fillerGlass.tube.top().color()) ):     # this glass is contain colors and available Space but color not match.
             print('\n ---Deleted: glass contain colors and available space but not match color')
             return False
+        elif(not(self.isEmpty()) and (self.tube.top().color() == fillerGlass.tube.top().color()) ): 
+            availableSpace = self.capacity - self.levelOfColor
+            lenColorFilling = fillerGlass.tube.top().lengthColor()
+            if(availableSpace >= lenColorFilling):            
+                insertedDrop = fillerGlass.popOutOfGlass()
+                return self.pushToGlass(insertedDrop)
+            else:       # (availableSpace < lenColorFilling):
+                # neededLength = lenColorFilling - availableSpace
+                insertedDrop = fillerGlass.popApartOfTopOutOfGlass(availableSpace)
+                if (insertedDrop == None):
+                    return False
+                else:
+                    return self.pushToGlass(insertedDrop)    
+        
         elif( self.isEmpty() ):     # this glass empty but fillerGlass have colors
             availableSpace = self.capacity          # available space of this Glass 
             lenColorFilling = fillerGlass.tube.top().lengthColor()
@@ -255,12 +269,13 @@ class Glass:
                 insertedDrop = fillerGlass.popOutOfGlass()
                 return self.pushToGlass(insertedDrop)
             else:       # (availableSpace < lenColorFilling):
-                neededLength = lenColorFilling - availableSpace
-                insertedDrop = fillerGlass.popApartOfTopOutOfGlass(neededLength)
+                # neededLength = lenColorFilling - availableSpace
+                insertedDrop = fillerGlass.popApartOfTopOutOfGlass(availableSpace)
                 if (insertedDrop == None):
                     return False
                 else:
                     return self.pushToGlass(insertedDrop)
+        
                 
         
     
