@@ -74,15 +74,18 @@ bash
 $ git clone https://github.com/{{ngocthanh-hcmut}}/ai-introduction-assignment1
 
 # Access
+```
 $ cd ai-introduction-assignment1
 
-```# Install dependencies
-$ yarn
+<!-- # Install dependencies -->
+<!-- $ yarn -->
 
+
+# Run the genetic Agorithm 
 ```
-# Run the genetic Agorithm
 $ cd geneticAgorithm
 $ python main.py
+```
 :heavy_check_mark: For modify proram parameter: check file geneticAgorithm/readme.md;
 
 # Run other agorithm:
@@ -90,12 +93,6 @@ $ python main.py
 
 <!-- # The server will initialize in the <http://localhost:3000> -->
 
-```
-## :memo: License ##
-
-This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
-
-```
 Made with :heart: by ShibaTeam
 
 &#xa0;
