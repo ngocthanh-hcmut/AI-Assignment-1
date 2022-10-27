@@ -66,7 +66,7 @@ Thuật toán Genetic cho trò chơi bloxorz
       - giá trị '9': ô gạch mục tiêu (lăn vô là win)   
 
 
-Made with :heart: by ShibaTeam
+Made with :heart: by Truong Pham
 
 &#xa0;
 
