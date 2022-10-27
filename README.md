@@ -74,18 +74,15 @@ bash
 $ git clone https://github.com/{{ngocthanh-hcmut}}/ai-introduction-assignment1
 
 # Access
-```
+
 $ cd ai-introduction-assignment1
 
-<!-- # Install dependencies -->
-<!-- $ yarn -->
 
+Run the genetic Agorithm 
 
-# Run the genetic Agorithm 
-```
 $ cd geneticAgorithm
 $ python main.py
-```
+
 :heavy_check_mark: For modify proram parameter: check file geneticAgorithm/readme.md;
 
 # Run other agorithm:
