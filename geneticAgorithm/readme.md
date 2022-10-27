@@ -9,7 +9,7 @@
 <h1 align="center">Thay đổi thông số trong chương trình</h1>
 
 <p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/{{ngocthanh-hcmut}}/ai-introduction-assignment1?color=56BEB8">
+  <!-- <img alt="Github top language" src="https://img.shields.io/github/languages/top/{{ngocthanh-hcmut}}/ai-introduction-assignment1?color=56BEB8"> -->
 
   <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/{{YOUR_GITHUB_USERNAME}}/ai-introduction-assignment1?color=56BEB8" /> -->
 

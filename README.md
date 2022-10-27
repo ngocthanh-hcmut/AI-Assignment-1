@@ -9,13 +9,14 @@
 <h1 align="center">AI Introduction Assignment1</h1>
 
 <p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/{{ngocthanh-hcmut}}/ai-introduction-assignment1?color=56BEB8">
+
+  <!-- <img alt="Github top language" src="https://img.shields.io/github/languages/top/{{ngocthanh-hcmut}}/ai-introduction-assignment1?color=56BEB8">
 
   <img alt="Github language count" src="https://img.shields.io/github/languages/count/{{ngocthanh-hcmut}}/ai-introduction-assignment1?color=56BEB8">
 
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/{{ngocthanh-hcmut}}/ai-introduction-assignment1?color=56BEB8">
 
-  <img alt="License" src="https://img.shields.io/github/license/{{ngocthanh-hcmut}}/ai-introduction-assignment1?color=56BEB8">
+  <img alt="License" src="https://img.shields.io/github/license/{{ngocthanh-hcmut}}/ai-introduction-assignment1?color=56BEB8"> -->
 
   <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/{{ngocthanh-hcmut}}/ai-introduction-assignment1?color=56BEB8" /> -->
 
@@ -38,7 +39,7 @@
   <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
   <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
   <a href="#checkered_flag-starting">Starting</a> &#xa0; | &#xa0;
-  <a href="#memo-license">License</a> &#xa0; | &#xa0;
+  <!-- <a href="#memo-license">License</a> &#xa0; | &#xa0; -->
   <a href="https://github.com/{{ngocthanh-hcmut}}" target="_blank">Author</a>
 </p>
 
@@ -46,7 +47,7 @@
 
 ## :dart: About ##
 
-Describe your project
+AI Assignment 1
 
 ## :sparkles: Features ##
 
