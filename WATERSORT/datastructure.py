@@ -1,4 +1,5 @@
 from collections import deque
+from inspect import stack
 
 
 # Color drop: giọi màu
@@ -238,14 +239,14 @@ class Glass:
         
     def fillingColor(self,fillerGlass):
         """filling this glass by color in fillerGlass. Return true if filling process succees else return false"""
-        if(fillerGlass.getLevelOfColor()==0 or fillerGlass.isEmpty()  ):   # tillerGlass does not have any colors.
-            print('\n ---Deleted: filler glass does not have colors')
+        if(fillerGlass.getLevelOfColor()== 0 or fillerGlass.isEmpty()  ):   # tillerGlass does not have any colors.
+            # print('\n ---Deleted: filler glass does not have colors')
             return False
         elif(self.GlassIsFull()):   # this glass now is full
-            print('\n ---Deleted: glass now is Full')
+            # print('\n ---Deleted: glass now is Full')
             return False
         elif(not(self.isEmpty()) and (self.tube.top().color() != fillerGlass.tube.top().color()) ):     # this glass is contain colors and available Space but color not match.
-            print('\n ---Deleted: glass contain colors and available space but not match color')
+            # print('\n ---Deleted: glass contain colors and available space but not match color')
             return False
         elif(not(self.isEmpty()) and (self.tube.top().color() == fillerGlass.tube.top().color()) ): 
             availableSpace = self.capacity - self.levelOfColor
@@ -423,13 +424,28 @@ class Glass:
     
         
         
-        
-        
-        
-        
-        
-        
-        
+# d1=Drop('Red',1)
+# d2=Drop('Blue',2)
+# d3=Drop('Blue',4)
+# d4=Drop('White',4)
+# d5=Drop('pink',5)
+
+# s1=Stack([])
+# s2=Stack([d3,d4])
+# # s2=Stack([])
+
+# g1=Glass('g1',s1,3)
+# g2=Glass('g2',s2,9)
+
+# g1()
+# g2()
+# print('\n')
+# print('filling:',g1.fillingColor(g2))
+# print('\n')
+# g1()
+# g2()
+
+
 
 # d0 = Drop('Red',0)
 # d1=Drop('Red',4)
@@ -443,31 +459,9 @@ class Glass:
 # g1()
 
 # print('\n')
-# print(g1.popApartOfTopOutOfGlass(-5))
+# print(g1.popApartOfTopOutOfGlass(5))
 # print('\n')
 # g1()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # g1()
 # print('\nDone:',g1.checkDone())
 # print('\ntop: ',g1.topOfGlass())
