@@ -69,20 +69,19 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) an
 
 ## :checkered_flag: Starting ##
 
-bash
 # Clone this project
 $ git clone https://github.com/{{ngocthanh-hcmut}}/ai-introduction-assignment1
 
 # Access
-
+```bash
 $ cd ai-introduction-assignment1
 
 
-Run the genetic Agorithm 
-
+### Run the genetic Agorithm 
+```bash
 $ cd geneticAgorithm
 $ python main.py
-
+```
 :heavy_check_mark: For modify proram parameter: check file geneticAgorithm/readme.md;
 
 # Run other agorithm:
