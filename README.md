@@ -75,7 +75,7 @@ $ git clone https://github.com/{{ngocthanh-hcmut}}/ai-introduction-assignment1
 # Access
 ```bash
 $ cd ai-introduction-assignment1
-
+```
 
 ### Run the genetic Agorithm 
 ```bash
