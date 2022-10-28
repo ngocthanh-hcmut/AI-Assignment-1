@@ -1,5 +1,4 @@
 from collections import deque
-from inspect import stack
 
 
 # Color drop: giọi màu
@@ -424,26 +423,26 @@ class Glass:
     
         
         
-# d1=Drop('Red',1)
-# d2=Drop('Blue',2)
-# d3=Drop('Blue',4)
-# d4=Drop('White',4)
-# d5=Drop('pink',5)
+d1=Drop('Red',1)
+d2=Drop('Blue',2)
+d3=Drop('Blue',4)
+d4=Drop('White',4)
+d5=Drop('pink',5)
 
-# s1=Stack([])
-# s2=Stack([d3,d4])
-# # s2=Stack([])
+s1=Stack([])
+s2=Stack([d3,d4])
+# s2=Stack([])
 
-# g1=Glass('g1',s1,3)
-# g2=Glass('g2',s2,9)
+g1=Glass('g1',s1,3)
+g2=Glass('g2',s2,9)
 
-# g1()
-# g2()
-# print('\n')
-# print('filling:',g1.fillingColor(g2))
-# print('\n')
-# g1()
-# g2()
+g1()
+g2()
+print('\n')
+print('filling:',g1.fillingColor(g2))
+print('\n')
+g1()
+g2()
 
 
 
