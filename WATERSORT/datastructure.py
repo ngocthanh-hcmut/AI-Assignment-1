@@ -2,7 +2,7 @@ from collections import deque
 from inspect import stack
 
 
-# Color drop: giọi màu
+# Color drop: giọt màu
 class Drop:
     def __init__(self,color,length=1):
         if(length <=0):
@@ -416,69 +416,3 @@ class Glass:
                     self.isFull=False
                     self.levelOfColor += insertedDropObject.lengthColor()
                     return True
-                    
-            
-            
-        
-        
-    
-        
-        
-# d1=Drop('Red',1)
-# d2=Drop('Blue',2)
-# d3=Drop('Blue',4)
-# d4=Drop('White',4)
-# d5=Drop('pink',5)
-
-# s1=Stack([])
-# s2=Stack([d3,d4])
-# # s2=Stack([])
-
-# g1=Glass('g1',s1,3)
-# g2=Glass('g2',s2,9)
-
-# g1()
-# g2()
-# print('\n')
-# print('filling:',g1.fillingColor(g2))
-# print('\n')
-# g1()
-# g2()
-
-
-
-# d0 = Drop('Red',0)
-# d1=Drop('Red',4)
-# d2=Drop('Blue',1)
-# d3=Drop('Blue',3)
-# d4=Drop('Green',1)
-
-# s1 = Stack([d1,d2])
-# g1 = Glass('ahihi',s1,7)
-
-# g1()
-
-# print('\n')
-# print(g1.popApartOfTopOutOfGlass(5))
-# print('\n')
-# g1()
-# g1()
-# print('\nDone:',g1.checkDone())
-# print('\ntop: ',g1.topOfGlass())
-# s1 = Stack([d1,d2])
-# s1 = Stack([d1])
-# s1 = Stack([d1,d2,d3,d4])
-# print(g1.fillingColor(g1))
-
-
-
-# s1 = Stack([1,2,3,4,5])
-# for i in range(0,s1.length()):
-#     print(i,' - ',s1.getStackList()[i])
-# s1.removeItem(0)
-# print('\n')
-# for i in range(0,s1.length()):
-#     print(i,' - ',s1.getStackList()[i])    
-# g1=Glass('ahihi',s1,10)
-# print(s1())
-# print("\n")
