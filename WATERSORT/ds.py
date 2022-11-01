@@ -21,7 +21,7 @@ class Glass:
         return True
     
     def isComplete(self):
-        return self.isFull() and self.isSameColor()
+        return (self.isFull() and self.isSameColor()) or self.isEmpty()
     
     def popColor(self):
         return self.colors.pop() if not self.isEmpty() else None
