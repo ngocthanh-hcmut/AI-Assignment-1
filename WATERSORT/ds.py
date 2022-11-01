@@ -9,7 +9,7 @@ class Glass:
         return (len(self.colors) == self.capacity)
     
     def isEmpty(self):
-        return self.colors
+        return (len(self.isEmpty) == 0)
     
     def isSameColor(self):
         if self.isEmpty(): return True
@@ -25,21 +25,30 @@ class Glass:
         return self.isFull() and self.isSameColor()
     
     def popColor(self):
-        return self.colors.pop() if self.colors else None
+        return self.colors.pop() if not self.isEmpty() else None
     
     def topColor(self):
-        return self.colors[-1] if self.colors else None
+        return self.colors[-1] if not self.isEmpty() else None
     
     def appendColor(self, color):
         self.colors.append(color)
-    
-def pourWater(source, destination):
-    while (source.topColor() == destination.topColor() and 
-           source.topColor() != None and 
-           not destination.isFull()):
+
+def canBePoured(source, destination):
+    if (source.isEmpty() or
+        destination.isFull() or
+        source.topColor() != destination.topColor()):
         
-        source.popColor()
-        destination.appendColor(source.topColor())
+        return False
+    
+    return True
+
+def pourWater(source, destination):
+    if not canBePoured(source, destination):
+        return False
+    
+    while (canBePoured(source, destination)):
+        color = source.popColor()
+        destination.appendColor(color)
     
     return True
 
