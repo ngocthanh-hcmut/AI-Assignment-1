@@ -62,6 +62,7 @@ class State:
     
     def __init__(self, glasses, parent = None):
         self.glasses = glasses
+
         self.parent = parent
         self.gScore = 0
         self.fScore = self.getFScore()
@@ -92,6 +93,16 @@ class State:
                     newState.parent = self
                     children.append(newState)     
         return children
+    
+class heurState(State):
+    def ___init__(self, glasses):
+        super().__init__(glasses)
+        self.gScore = 0
+        self.fScore = self.heuristicEvaluate(glasses)
+        
+    def heuristicEvaluate(self, glasses):
+        pass
+    
         
 
             
