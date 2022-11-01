@@ -59,9 +59,8 @@ class State:
     
     def __init__(self, glasses):
         self.glasses = glasses
-        self.parent = None
-        self.gScore = 0
-        self.fScore = self.getFScore()
+        self.parent = None      
+        
         
     def isLevelComplete(self):
         for glass in self.glasses:
@@ -83,6 +82,16 @@ class State:
                     pourWater(newState.glasses[i], newState.glasses[j])
                     children.append(newState)        
         return children
+    
+class heurState(State):
+    def ___init__(self, glasses):
+        super().__init__(glasses)
+        self.gScore = 0
+        self.fScore = self.heuristicEvaluate(glasses)
+        
+    def heuristicEvaluate(self, glasses):
+        pass
+    
         
 
             
