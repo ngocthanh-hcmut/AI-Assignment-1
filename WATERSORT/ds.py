@@ -6,6 +6,9 @@ class Glass:
     def __init__(self, capacity, colors):
         self.capacity = capacity
         self.colors = colors
+    
+    def __eq__(self, other):
+        return self.colors == other.colors
         
     def isFull(self):
         return (len(self.colors) == self.capacity)
@@ -57,11 +60,16 @@ def pourWater(source, destination):
 
 class State:
     
-    def __init__(self, glasses):
+    def __init__(self, glasses, parent = None):
         self.glasses = glasses
-        self.parent = None
+        self.parent = parent
         self.gScore = 0
         self.fScore = self.getFScore()
+    
+    def __eq__(self, other):
+        self.glasses
+        other.glasses
+        return (self.glasses == other.glasses)
         
     def isLevelComplete(self):
         for glass in self.glasses:
@@ -81,7 +89,8 @@ class State:
                 if canBePoured(source, destination):
                     newState = copy.deepcopy(self)
                     pourWater(newState.glasses[i], newState.glasses[j])
-                    children.append(newState)        
+                    newState.parent = self
+                    children.append(newState)     
         return children
         
 
