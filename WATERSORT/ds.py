@@ -1,7 +1,6 @@
 class Glass:
     
-    def __init__(self, name, capacity, colors, size):
-        self.name = name
+    def __init__(self, capacity, colors):
         self.capacity = capacity
         self.colors = colors
         
@@ -51,6 +50,7 @@ def pourWater(source, destination):
         destination.appendColor(color)
     
     return True
+
 
 class State:
     

@@ -1,9 +1,9 @@
-import state
+from ds import *
 
-def generatePossibleMoves(State state): 
+def generatePossibleMoves(states): 
     return []
     
-def depthFirstSearch(State initState):
+def depthFirstSearch(initState):
     states = [initState]
     while states: 
         currentState = states.pop()
