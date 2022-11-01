@@ -1,3 +1,6 @@
+import copy
+
+
 class Glass:
     
     def __init__(self, capacity, colors):
@@ -64,6 +67,19 @@ class State:
             
         return True
     
+    def generateChildren(self):
+        children = []
+        for i in range(0, len(self.glasses) - 1):
+            for j in range(i+1, len(self.glasses)):
+                source = self.glasses[i]
+                destination = self.glasses[j]
+                
+                if canBePoured(source, destination):
+                    newState = copy.deepcopy(self)
+                    pourWater(newState.glasses[i], newState.glasses[j])
+                    children.append(newState)
+        
+        return children
         
 
             
