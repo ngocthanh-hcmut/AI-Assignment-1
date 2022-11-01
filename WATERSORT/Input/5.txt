@@ -1,0 +1,7 @@
+orange cyan blue pink
+pink red orange red
+cyan cyan red blue
+cyan orange blue pink
+orange pink red blue
+_ _ _ _
+_ _ _ _

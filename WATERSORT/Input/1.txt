@@ -1,3 +1,2 @@
-red,yellow,_,_,_
-red,red,red,_,_
-_,_,_,_,_
+orange _ _ _
+orange orange orange _
