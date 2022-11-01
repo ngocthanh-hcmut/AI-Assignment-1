@@ -59,26 +59,29 @@ class State:
     
     def __init__(self, glasses):
         self.glasses = glasses
+        self.parent = None
+        self.gScore = 0
+        self.fScore = self.getFScore()
         
     def isLevelComplete(self):
         for glass in self.glasses:
             if not glass.isComplete():
-                return False
-            
+                return False            
         return True
+    
+    def getFScore(self):
+        pass
     
     def generateChildren(self):
         children = []
         for i in range(0, len(self.glasses) - 1):
             for j in range(i+1, len(self.glasses)):
                 source = self.glasses[i]
-                destination = self.glasses[j]
-                
+                destination = self.glasses[j]                
                 if canBePoured(source, destination):
                     newState = copy.deepcopy(self)
                     pourWater(newState.glasses[i], newState.glasses[j])
-                    children.append(newState)
-        
+                    children.append(newState)        
         return children
         
 
