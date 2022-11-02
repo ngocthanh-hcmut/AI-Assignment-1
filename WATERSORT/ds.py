@@ -62,10 +62,7 @@ class State:
     
     def __init__(self, glasses, parent = None):
         self.glasses = glasses
-
         self.parent = parent
-        self.gScore = 0
-        self.fScore = self.getFScore()
     
     def __eq__(self, other):
         self.glasses
