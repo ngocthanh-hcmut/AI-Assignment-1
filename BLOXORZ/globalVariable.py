@@ -12,8 +12,8 @@ DESTINATION_BRICK_COLOR = pygame.Color(199, 236, 238)
 PRISM_COLOR = [pygame.Color(30, 144, 255), pygame.Color(46, 213, 115), pygame.Color(83, 82, 237), pygame.Color(255, 107, 129), pygame.Color(0, 148, 50), pygame.Color(255, 195, 18), pygame.Color(27, 20, 100), pygame.Color(165, 94, 234)]
 
 # object size infomation
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 40 * 20
+SCREEN_HEIGHT = 40 * 16
 
 BRICK_SIZE = 40
 
@@ -25,12 +25,12 @@ CUBIC_SIZE = 10
 MAP_WIDTH = BRICK_SIZE * 30
 MAP_HEIGHT = BRICK_SIZE * 20
 
-DNA_LENGTH = 30
-POPULATION = 100
+DNA_LENGTH = 20
+POPULATION = 50
 
 # initial information
 
-INITIAL_BASE_BRICKS = [[3, 3]]
+INITIAL_BASE_BRICKS = [[1, 1]]
 MOVE_TIME = 0.25 # seconds
-NUMBER_TO_MUTATE = 10
-NUMBER_OF_GEN_TO_MUTATE = 10
+NUMBER_TO_MUTATE = 0
+NUMBER_OF_GEN_TO_MUTATE = 0

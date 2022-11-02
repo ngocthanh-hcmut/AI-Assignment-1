@@ -7,6 +7,7 @@ import squarePrism as prism
 import globalVariable as const
 import rounder as r
 from concurrent import futures as ftr
+import pygame
 
 class GeneticAgorithm:
 
@@ -14,17 +15,21 @@ class GeneticAgorithm:
     creatures = []
     selection = []
     inputMap = None
+    scoreMap = None
     totalScore = 0
+    screen = None
 
-    def __init__(self, inputMap):
+    def __init__(self, inputMap, scoreMap, screen):
         self.inputMap = inputMap
+        self.scoreMap = scoreMap
         self.generatePopulation()
         self.generation = 0
+        self.screen = screen
 
     def generatePopulation(self):
         i = 1
         while i <= self.population:
-          self.creatures.append(prism.SquarePrism(self.inputMap))
+          self.creatures.append(prism.SquarePrism(self.inputMap, self.scoreMap))
           i = i + 1
 
     def makeSelection(self):
@@ -68,10 +73,10 @@ class GeneticAgorithm:
                     child2Dna.append(motherDNA[j])
             # print("child 1 dna = ", child1Dna)
             # print("child 2 dna = ", child2Dna)
-            child1 = prism.SquarePrism(self.inputMap, child1Dna)
+            child1 = prism.SquarePrism(self.inputMap, self.scoreMap, child1Dna)
             # print("child dna 1: ", child1Dna)
             # print("child dna 2: ", child2Dna)
-            child2 = prism.SquarePrism(self.inputMap, child2Dna)
+            child2 = prism.SquarePrism(self.inputMap, self.scoreMap, child2Dna)
             newGeneration.append(child1)
             newGeneration.append(child2)
         
@@ -86,8 +91,9 @@ class GeneticAgorithm:
 
 
     def mutate(self):
+        if const.NUMBER_OF_GEN_TO_MUTATE > len(self.creatures): return
         for i in range(0, const.NUMBER_TO_MUTATE):
-            position = random.randint(0, len(self.creatures))
+            position = random.randint(0, len(self.creatures)-1)
             self.creatures[position].mutate()
 
     def fitnessFunction(self):
@@ -97,9 +103,17 @@ class GeneticAgorithm:
         for prism in self.creatures:
             prism.render(screen)
 
-    def thrive(self):
+    def showGeneration(self, screen):
+        background = pygame.image.load('image/background.jpg')
+        screen.blit(background, (0,0, const.SCREEN_WIDTH, const.SCREEN_HEIGHT))
         self.generation = self.generation + 1
-        print("Genetic: Thriving in generation: ", self.generation)
+        message = "Genetic: Thriving in generation: " + str(self.generation)
+        font = pygame.font.Font('freesansbold.ttf', 16)
+        text = font.render(message, True, (255,255,255))
+        self.screen.blit(text, (0, (const.BRICK_SIZE+1)*len(self.inputMap)))
+
+    def thrive(self):
+        self.showGeneration(self.screen)
         futures = []
         with ThreadPoolExecutor(max_workers=len(self.creatures)) as executor:
             for creature in self.creatures:

@@ -1,3 +1,4 @@
+from cmath import sqrt
 import copy
 from time import sleep
 from turtle import heading, width
@@ -15,14 +16,17 @@ class SquarePrism:
     MOVE_DOWN = 4
 
     inputMap = None
+    scoreMap = None
 
     solution = None
+    win = False
 
-    def __init__(self, inputMap, DNA=None):
+    def __init__(self, inputMap, scoreMap, DNA=None):
         self.color = const.PRISM_COLOR[random.randint(0,len(const.PRISM_COLOR)-1)]
 
         self.baseBricks = None
         self.inputMap = None
+        self.scoreMap = scoreMap
 
         self.xPos = None
         self.yPos = None
@@ -30,8 +34,8 @@ class SquarePrism:
         self.height = None
    
         self.DNA = DNA if DNA != None else []
+        self.DNA = SquarePrism.solution if SquarePrism.solution != None else []
         self.lost = False
-        self.win = False
         self.age = 0
 
         self.selectionRate = 0
@@ -269,9 +273,10 @@ class SquarePrism:
         sleep(0.1)
         self.lost = True
     
+    
     def gameWin(self):
         self.win = True
-        self.solution = copy.deepcopy()
+        self.solution = copy.deepcopy(self.DNA)
     
     def checkGameStatus(self):
         # # print(self.inputMap)
@@ -341,24 +346,29 @@ class SquarePrism:
     # khoảng cách ngắn nhất từ khối trụ tới mục tiêu
     def calculateFitnessScore(self):
         
-        maxScore = len(self.inputMap) + len(self.inputMap[0])
-        destinationBrick = None
+        # maxScore = len(self.inputMap) + len(self.inputMap[0])
+        # destinationBrick = None
 
-        # find destination brick
-        for i in range(0, len(self.inputMap)):
-            for j in range(0, len(self.inputMap[0])):
-                if self.inputMap[i][j] == '9':
-                    destinationBrick = [j, i]
+        # # find destination brick
+        # for i in range(0, len(self.inputMap)):
+        #     for j in range(0, len(self.inputMap[0])):
+        #         if self.inputMap[i][j] == '9':
+        #             destinationBrick = [j, i]
 
-        #calculate distance
-        goHowFar = self.calculateDistance(self.baseBricks, const.INITIAL_BASE_BRICKS[0], True)
-        reachHowLong = self.calculateDistance(self.baseBricks, destinationBrick)
-        distanceScore = maxScore - reachHowLong
-        # print("id ", threading.get_ident(), ": how far: ", goHowFar)
-        # print("id ", threading.get_ident(), ": reach: ", reachHowLong)
-        # print("id ", threading.get_ident(), ": age: ", self.age)
-        self.fitnessScore = (distanceScore) + (goHowFar) + self.age
-        # print("id ", threading.get_ident(), ": score: ", self.fitnessScore)
+        # #calculate distance
+        # a = self.calculateDistance(const.INITIAL_BASE_BRICKS, destinationBrick);
+        # goHowFar = self.calculateDistance(self.baseBricks, const.INITIAL_BASE_BRICKS[0], True)
+        # reachHowLong = self.calculateDistance(self.baseBricks, destinationBrick)
+        # distanceScore = maxScore - reachHowLong
+
+        score = 0
+        for brick in self.baseBricks:
+            score = score + self.scoreMap[brick[1], brick[0]]
+        
+        print(self.scoreMap)
+        self.fitnessScore = 100
+        
+        
 
     def calculateDistance(self, baseBrick, destination, max=False):
         distance = None
@@ -369,7 +379,7 @@ class SquarePrism:
             else:
                 distance = tempDistance if distance == None or distance < tempDistance else distance
 
-        return distance
+        return 2
 
     def destinationLookable(self, baseBrick, destinationBrick):
         pass

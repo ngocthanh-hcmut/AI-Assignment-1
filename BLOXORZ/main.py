@@ -17,7 +17,7 @@ icon = pygame.image.load('image/icon.png')
 pygame.display.set_icon(icon)
 screen.fill(const.BACKGROUND_COLOR)
 mapp = m.Map(screen)
-agorithm = ga.GeneticAgorithm(mapp.inputMap)
+agorithm = ga.GeneticAgorithm(mapp.inputMap, mapp.scoreMap, screen)
 generationCount = 0
 
 thread = threading.Thread(target=agorithm.thrive, args=())
@@ -32,7 +32,9 @@ while running:
     if not(thread.is_alive()) and running:
         thread = threading.Thread(target=agorithm.thrive, args=())
         thread.start()
+
     
+
     mapp.render(screen)
     agorithm.updatePosition(screen)
     pygame.display.update()
