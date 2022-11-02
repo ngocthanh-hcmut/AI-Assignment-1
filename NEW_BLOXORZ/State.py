@@ -1,4 +1,6 @@
 
+from Square.CircleToggleSquare import CircleToggleSquare
+from Square.XToggleSquare import XToggleSquare
 from Square.Square import Square
 from Square.HoleSquare import HoleSquare
 from Square.NoneSquare import NoneSquare
@@ -118,8 +120,10 @@ class State:
             if isinstance(self.floor.squares[yPosition][xPosition], HoleSquare) and self.isStanding():
                 self.gameWin()
                 return True
-            # if isinstance(self.floor.squares[yPosition][xPosition], CircleToggleSquare):
-            #     self.map.Squares[yPosition][xPosition].toggle()
+            if isinstance(self.floor.squares[yPosition][xPosition], CircleToggleSquare):
+                self.floor.squares[yPosition][xPosition].toggle(self.floor)
+            if isinstance(self.floor.squares[yPosition][xPosition], XToggleSquare) and self.isStanding():
+                self.floor.squares[yPosition][xPosition].toggle(self.floor)
         return None
 
     def gameWin(self):

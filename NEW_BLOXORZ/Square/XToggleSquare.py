@@ -28,24 +28,34 @@ class XToggleSquare(Square):
         return True if isinstance(self.targets[0], NoneSquare) else False
 
     def open(self, floor):
-        if not self.canOpen: return
-        for i in range(self.targets):
+        if not(self.canOpen): return
+        # print("opening")
+        for i in range(len(self.targets)):
             x = self.targets[i].xPosition
             y = self.targets[i].yPosition
-            floor.squares[y][x] = NormalSquare(x, y)
+            newSquare = NormalSquare(x, y)
+            floor.squares[y][x] = newSquare
+            self.targets[i] = newSquare
 
     def close(self, floor):
         if not self.canClose: return
-        for i in range(self.targets):
+        # print("closing")
+        for i in range(len(self.targets)):
             x = self.targets[i].xPosition
             y = self.targets[i].yPosition
-            floor.squares[y][x] = NoneSquare(x, y)
+            newSquare = NoneSquare(x, y)
+            floor.squares[y][x] = newSquare
+            self.targets[i] = newSquare
 
     def toggle(self, floor):
+        # print("target = ", self.targets[0].xPosition, ",", self.targets[0].yPosition, " - ",self.targets[1].xPosition, ",", self.targets[1].yPosition )
         if self.isOpened():
+            # print("is opened")
             self.close(floor)
-        if self.isClosed(floor):
-            self.open()
+        elif self.isClosed():
+            # print("is closed")
+            self.open(floor)
+            
 
     def addTarget(self, target):
         self.targets.append(target)

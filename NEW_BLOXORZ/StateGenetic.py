@@ -1,4 +1,5 @@
 
+from Square.XToggleSquare import XToggleSquare
 from State import State
 from Square.Square import Square
 from Square.HoleSquare import HoleSquare
@@ -43,6 +44,9 @@ class StateGenetic(State):
                 return True
             if isinstance(self.floor.squares[yPosition][xPosition], CircleToggleSquare):
                 self.floor.squares[yPosition][xPosition].toggle(self.floor)
+            if isinstance(self.floor.squares[yPosition][xPosition], XToggleSquare) and self.isStanding():
+                self.floor.squares[yPosition][xPosition].toggle(self.floor)
+
         return None
 
     def gameWin(self):
