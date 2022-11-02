@@ -1,14 +1,22 @@
-import state
-
-def generatePossibleMoves(State state): 
-    return []
+from os import stat
+from ds import *
     
-def depthFirstSearch(State initState):
+def depthFirstSearch(initState):
     states = [initState]
-    while states: 
+    visited = []
+    while states:
         currentState = states.pop()
-        if (checkGameStatus(currentState) == WIN): return
-        states.append(generatePossibleMoves)
+        visited.append(currentState)
+        
+        if currentState.isLevelComplete(): 
+            return currentState
+        
+        children = currentState.generateChildren()
+        for child in children:
+            if child not in visited:
+                states.append(child)
+            
+           
         
         
     
