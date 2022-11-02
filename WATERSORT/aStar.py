@@ -8,7 +8,7 @@ def aStarSearch(start):
     start.gScore = 0
     start.fScore = start.heuristicEvaluate()
     
-    Openlst.put((start.fScore, start))
+    Openlst.put(start)
     
     while not Openlst.empty():
         cur = Openlst.get()[1]
