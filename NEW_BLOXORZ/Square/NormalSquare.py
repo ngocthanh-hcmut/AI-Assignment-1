@@ -1,8 +1,8 @@
 # class NormalFloor đại diện cho một lát gạch bình thường trên bản đồ
-from Floor.Floor import Floor
 import pygame
+from Square.Square import Square
 
-class NormalFloor(Floor):
+class NormalSquare(Square):
     
     color = pygame.Color(178, 190, 195)
 

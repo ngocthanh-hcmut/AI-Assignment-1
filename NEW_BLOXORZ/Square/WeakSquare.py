@@ -1,8 +1,8 @@
-from Floor.Floor import Floor
 import pygame
+from Square.Square import Square
 
 # class WeakFloor đại diện cho lát gạch yếu của trò chơi
-class WeakFloor(Floor):
+class WeakSquare(Square):
     
     color = pygame.Color(255, 195, 18)
 

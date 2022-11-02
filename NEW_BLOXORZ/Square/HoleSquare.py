@@ -1,9 +1,8 @@
 # class Hole thể hiện mục tiêu cần đi đến
-
-from Floor.Floor import Floor
 import pygame
+from Square.Square import Square
 
-class HoleFloor(Floor):
+class HoleSquare(Square):
 
     color = pygame.Color(0,0,0) # black
 

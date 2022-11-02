@@ -1,10 +1,10 @@
 # class NoneFloor đại diện cho khoản trống trên bảng đồ
 
 
-from Floor.Floor import Floor
 import pygame
+from Square.Square import Square
 
-class NoneFloor(Floor):
+class NoneSquare(Square):
 
     color = pygame.Color(0, 0, 0)
 

@@ -1,7 +1,7 @@
 # class Floor đại diện cho một lát gạch trên bản đồ
 import pygame
 
-class Floor:
+class Square:
 
     width = 50
     height = 50

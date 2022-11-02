@@ -1,10 +1,7 @@
-# class StartFloor thể hiện floor đầu tiên của khổi gạch khi bắt đầu trò chơi
-
-
-from Floor.Floor import Floor
 import pygame
+from Square.Square import Square
 
-class StartFloor(Floor):
+class StartSquare(Square):
 
     def __init__(self, xPosition, yPosition) -> None:
         super().__init__(xPosition, yPosition)
