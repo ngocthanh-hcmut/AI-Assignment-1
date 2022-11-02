@@ -140,8 +140,8 @@ class Block:
             if isinstance(self.map.floors[yPosition][xPosition], HoleFloor) and self.isStanding():
                 self.gameWin()
                 return
-            if isinstance(self.map.floors[yPosition][xPosition], CircleToggleFloor):
-                self.map.floors[yPosition][xPosition].toggle()
+            # if isinstance(self.map.floors[yPosition][xPosition], CircleToggleFloor):
+            #     self.map.floors[yPosition][xPosition].toggle()
 
     def gameWin(self):
         self.win = True
