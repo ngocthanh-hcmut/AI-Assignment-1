@@ -107,6 +107,9 @@ class heurState(State):
     def __eq__(self, other):
         # return self.fScore == other.fScore
         return super().__eq__(other)
+    
+    def __ne__(self,other):
+        return not self.__eq__(other)
 
 class OpenQueue:
     def __init__(self):
@@ -130,8 +133,15 @@ class OpenQueue:
         tmplst =  []
         while not self.queue.empty():
             tmpState = self.queue.get()
-            
-            tmplst.append(tmpState)
+            if (updatedState != tmpState):
+                tmplst.append(tmpState)
+            else:
+                tmplst.append(updatedState)
+                break
+        for i in range(0,len(tmplst)):
+            self.queue.put(tmplst[i])
+        
+        return True
             
     
         
