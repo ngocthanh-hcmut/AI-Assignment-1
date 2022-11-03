@@ -1,5 +1,5 @@
 from input import *
-import depthFirstSearch
+from depthFirstSearch import *
 
 initState = readInput()
 

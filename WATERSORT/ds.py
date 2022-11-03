@@ -8,6 +8,9 @@ class Glass:
         self.capacity = capacity
         self.colors = colors
     
+    def __lt__(self, other):
+        return self.colors < other.colors
+        
     def __eq__(self, other):
         return self.colors == other.colors
         
@@ -15,7 +18,7 @@ class Glass:
         return (len(self.colors) == self.capacity)
     
     def isEmpty(self):
-        return (len(self.isEmpty) == 0)
+        return (len(self.colors) == 0)
     
     def isSameColor(self):
         if self.isEmpty(): return True
@@ -43,7 +46,7 @@ def canBePoured(source, destination):
     if (source.isEmpty() or
         destination.isFull() or
         source.topColor() != destination.topColor()):
-        
+
         return False
     
     return True
@@ -62,7 +65,7 @@ def pourWater(source, destination):
 class State:
     
     def __init__(self, glasses, parent = None):
-        self.glasses = glasses.sort()
+        self.glasses = sorted(glasses)
         self.parent = parent
     
     def __eq__(self, other):
