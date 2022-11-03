@@ -62,7 +62,7 @@ def pourWater(source, destination):
 class State:
     
     def __init__(self, glasses, parent = None):
-        self.glasses = glasses
+        self.glasses = glasses.sort()
         self.parent = parent
     
     def __eq__(self, other):
@@ -86,7 +86,6 @@ class State:
                     newState = copy.deepcopy(self)
                     pourWater(newState.glasses[i], newState.glasses[j])
                     newState.parent = self
-                    newState.glasses.sort()
                     children.append(newState)     
         return children
     
