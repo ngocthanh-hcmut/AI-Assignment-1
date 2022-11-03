@@ -20,61 +20,55 @@ class CircleToggleSquare(Square):
         center = dict(x = self.xPosition*self.width + self.width/2, y = self.yPosition*self.height + self.height/2)
         radius = self.width / 3
         pygame.draw.circle(screen, self.CircleColor, (center["x"], center["y"]), radius, 5)
+        pygame.display.update(pygame.rect.Rect(self.xPosition*Square.width, self.yPosition*Square.height, Square.width, Square.height))
 
-    def isOpened(self):
-        return True if isinstance(self.targets[0], NormalSquare) else False
+    def isTargetOpened(self):
+        return self.targets[0].enabled
+        # return True if isinstance(self.targets[0], NormalSquare) else False
 
-    def isClosed(self):
-        return True if isinstance(self.targets[0], NoneSquare) else False
+    def isTargetClosed(self):
+        return not(self.targets[0].enabled)
+        # return True if isinstance(self.targets[0], NoneSquare) else False
 
-    def open(self, floor):
+    def openTarget(self, screen = None):
         if not(self.canOpen): return
         # print("opening")
         for i in range(len(self.targets)):
-            x = self.targets[i].xPosition
-            y = self.targets[i].yPosition
-            newSquare = NormalSquare(x, y)
-            floor.squares[y][x] = newSquare
-            self.targets[i] = newSquare
+            self.targets[i].enabled = not(self.targets[i].enabled)
+            self.targets[i].render(screen)
 
-    def close(self, floor):
+
+    def closeTarget(self, screen = None):
         if not self.canClose: return
         # print("closing")
         for i in range(len(self.targets)):
-            x = self.targets[i].xPosition
-            y = self.targets[i].yPosition
-            newSquare = NoneSquare(x, y)
-            floor.squares[y][x] = newSquare
-            self.targets[i] = newSquare
+            self.targets[i].enabled = not(self.targets[i].enabled)
+            self.targets[i].render(screen)
 
-    def toggle(self, floor):
-        # print("target = ", self.targets[0].xPosition, ",", self.targets[0].yPosition, " - ",self.targets[1].xPosition, ",", self.targets[1].yPosition )
-        if self.isOpened():
-            # print("is opened")
-            self.close(floor)
-        elif self.isClosed():
-            # print("is closed")
-            self.open(floor)
+            
+    def toggle(self, screen = None):
+        # print("toggle")
+        if self.isTargetOpened():
+            # print("is open")
+            self.closeTarget(screen)
+        elif self.isTargetClosed():
+            # print("is close")
+            self.openTarget(screen)
             
 
     def addTarget(self, target):
         self.targets.append(target)
     
     def setProperty(self, char):
+        # # print("setting property: ", self.xPosition, ", ", self.yPosition)
         if char == "!":
             self.canOpen = True
             self.canClose = True
+            # # print("can open can close")
         if char == "@":
             self.canOpen = True
+            # # print("can open")
         if char == "#":
             self.canClose = True
+            # # print("can close")
     
-    def __str__(self) -> str:
-        string = ''
-        for square in self.targets:
-            string += "(" + str(square.xPosition) + "," + str(square.yPosition) + ")"
-        if self.canOpen:
-            string += "  can open  "
-        if self.canClose:
-            string += "   can close   "
-        return string

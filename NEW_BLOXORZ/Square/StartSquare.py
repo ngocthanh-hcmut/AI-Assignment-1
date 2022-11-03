@@ -12,3 +12,4 @@ class StartSquare(Square):
         font = pygame.font.Font('freesansbold.ttf', 14)
         text = font.render(message, True, (6, 82, 221))
         screen.blit(text, ((self.xPosition+0.05)*self.width, (self.yPosition+0.4)*self.height))
+        pygame.display.update(pygame.rect.Rect(self.xPosition*self.width, self.yPosition*self.height, self.width, self.height))

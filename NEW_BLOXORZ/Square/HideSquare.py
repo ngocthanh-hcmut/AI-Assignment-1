@@ -1,18 +1,19 @@
-# class Floor đại diện cho một lát gạch trên bản đồ
+
 import pygame
+from Square.NoneSquare import NoneSquare
 
-class Square:
+class HideSquare(NoneSquare):
 
-    width = 50
-    height = 50
-    color = pygame.Color(178, 190, 195)
-    borderColor = pygame.Color(0,0,0)
-
-    def __init__(self, xPosition, yPosition) -> None:
-        self.xPosition = xPosition
-        self.yPosition = yPosition
+    def __init__(self, xPosition, yPosition, enable) -> None:
+        super().__init__(xPosition, yPosition)
+        self.enabled = enable
 
     def render(self, screen):
+        # print("rendering")
+        if self.enabled:
+            self.color = pygame.Color(47, 53, 66)
+        else:
+            self.color = pygame.Color(0, 0, 0)
         # vẽ cái nền
         pygame.draw.rect(screen, self.color, pygame.rect.Rect(self.xPosition*self.width, self.yPosition*self.height, self.width, self.height))
         # vẽ cái viền
