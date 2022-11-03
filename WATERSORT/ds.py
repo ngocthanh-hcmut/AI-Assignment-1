@@ -1,4 +1,5 @@
 import copy
+from queue import PriorityQueue
 
 
 class Glass:
@@ -98,7 +99,50 @@ class heurState(State):
         self.fScore = self.heuristicEvaluate(glasses)
         
     def heuristicEvaluate(self, glasses):
-        pass
+        return 0
+    
+    def __lt__(self, other):
+        return self.fScore < other.fScore
+    
+    def __eq__(self, other):
+        # return self.fScore == other.fScore
+        return super().__eq__(other)
+    
+    def __ne__(self,other):
+        return not self.__eq__(other)
+
+class OpenQueue:
+    def __init__(self):
+        self.queue = PriorityQueue()
+    
+    def empty(self):
+        return self.queue.empty()
+    
+    def put(self, state):
+        self.queue.put(state)
+    
+    def get(self):
+        return self.queue.get()
+    
+    def contains(self,state):
+        return state in self.queue.queue
+    
+    def update(self, updatedState):
+        if self.queue.empty() or not self.contains(updatedState):
+            return False
+        tmplst =  []
+        while not self.queue.empty():
+            tmpState = self.queue.get()
+            if (updatedState != tmpState):
+                tmplst.append(tmpState)
+            else:
+                tmplst.append(updatedState)
+                break
+        for i in range(0,len(tmplst)):
+            self.queue.put(tmplst[i])
+        
+        return True
+            
     
         
 
