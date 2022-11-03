@@ -82,9 +82,10 @@ q.put(s4)
 q.put(s5)
 # show(q)
 # print(q.queue)
+
 s2.fScore = 50
 s3.fScore = 100
-s1.fScore = 999
+# s1.fScore = 999
 # q.queue[4].fScore=1000
 show(q)
 

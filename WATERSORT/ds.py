@@ -61,6 +61,21 @@ def pourWater(source, destination):
     
     return True
 
+def getHScore(glass):
+    lenColors = len(glass.colors)
+    if (lenColors == 0):
+        return 1
+    elif (lenColors == 1):
+        return 0
+    score = 0
+    for i in range(0,lenColors - 1):
+        if glass.colors[i] == glass.colors[i+1]:
+            score += (glass.capacity - i)
+        else:
+            score -= (glass.capacity - i)
+    return score
+
+
 
 class State:
     
@@ -111,15 +126,26 @@ class heurState(State):
         self.gScore = 0
         self.fScore = self.heuristicEvaluate(glasses)
         
-    def heuristicEvaluate(self, glasses):
-        return 0
+    def heuristicEvaluate(self):
+        sum = 0
+        numOfGlasses = len(self.glasses)
+        for i in  range(0, numOfGlasses):
+            sum += getHScore(self.glasses[i])
+        return sum
+            
+            
     
     def __lt__(self, other):
         return self.fScore < other.fScore
     
     def __eq__(self, other):
         # return self.fScore == other.fScore
-        return super().__eq__(other)
+        # return super().__eq__(other)
+        if len(self.glasses) != len(self.glasses):
+            return False
+        else:
+            for i in range(0,len(self.glasses)):
+                self.glasses[i] 
     
     def __ne__(self,other):
         return not self.__eq__(other)
