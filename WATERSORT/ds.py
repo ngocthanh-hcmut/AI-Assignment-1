@@ -76,9 +76,6 @@ class State:
                 return False            
         return True
     
-    def getFScore(self):
-        pass
-    
     def generateChildren(self):
         children = []
         for i in range(0, len(self.glasses) - 1):
@@ -89,6 +86,7 @@ class State:
                     newState = copy.deepcopy(self)
                     pourWater(newState.glasses[i], newState.glasses[j])
                     newState.parent = self
+                    newState.glasses.sort()
                     children.append(newState)     
         return children
     

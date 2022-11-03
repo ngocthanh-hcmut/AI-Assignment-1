@@ -15,5 +15,7 @@ def readInput():
     for glass in input:
         glasses.append(Glass(capacity, glass))
     
+    glasses.sort()
+    
     return State(glasses)
         
