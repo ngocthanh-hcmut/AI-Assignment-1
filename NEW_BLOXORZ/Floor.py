@@ -1,5 +1,6 @@
 
 # Khai báo đối tượng Map: lưu thông tin về bản đồ của màn chơi
+from Square.HideSquare import HideSquare
 from Square.Square import Square
 from Square.StartSquare import StartSquare
 from Square.HoleSquare import HoleSquare
@@ -54,6 +55,11 @@ class Floor:
                     square = XToggleSquare(x, y)
                     self.toggleSquares.append(square)
                     SquareRow.append(square)
+                if line[x][0] == "t":
+                    SquareRow.append(HideSquare(x, y, True))
+                if line[x][0] == "f":
+                    SquareRow.append(HideSquare(x, y, False))
+
             self.squares.append(SquareRow)
         
         for y in range(len(lines)):
@@ -62,9 +68,12 @@ class Floor:
                 if len(line[x]) == 2:
                     char = line[x][1]
                     self.squares[y][x].setProperty(char)
-                if len(line[x]) == 3:
-                    index = int(line[x][2])
-                    self.toggleSquares[index].addTarget(self.squares[y][x])
+                if len(line[x]) >= 3:
+                    j = 2
+                    while j < len(line[x]):
+                        index = int(line[x][j])
+                        self.toggleSquares[index].addTarget(self.squares[y][x])
+                        j = j + 1
 
 
         # lưu thông tin width và height của map

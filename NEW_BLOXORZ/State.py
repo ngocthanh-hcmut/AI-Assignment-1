@@ -1,4 +1,5 @@
 
+from Square.HideSquare import HideSquare
 from Square.CircleToggleSquare import CircleToggleSquare
 from Square.XToggleSquare import XToggleSquare
 from Square.Square import Square
@@ -104,14 +105,11 @@ class State:
                 newSquare = dict(xPosition = xPositionMax + 1, yPosition = self.block.currentSquare[0]["yPosition"])
                 self.block.currentSquare = [newSquare]
 
-    def checkGameStatus(self, floor):
+    def checkGameStatus(self, screen = None):
         for square in self.block.currentSquare:
             xPosition = square["xPosition"]
             yPosition = square["yPosition"]
-            if xPosition < 0 or yPosition < 0 or xPosition >= floor.floorWidth / Square.width or yPosition >= floor.floorHeight/Square.height:
-                self.gameLose()
-                return False
-            if isinstance(self.floor.squares[yPosition][xPosition], NoneSquare):
+            if xPosition < 0 or yPosition < 0 or xPosition >= self.floor.floorWidth / Square.width or yPosition >= self.floor.floorHeight/Square.height:
                 self.gameLose()
                 return False
             if isinstance(self.floor.squares[yPosition][xPosition], WeakSquare) and self.isStanding():
@@ -121,9 +119,15 @@ class State:
                 self.gameWin()
                 return True
             if isinstance(self.floor.squares[yPosition][xPosition], CircleToggleSquare):
-                self.floor.squares[yPosition][xPosition].toggle(self.floor)
+                self.floor.squares[yPosition][xPosition].toggle(screen)
             if isinstance(self.floor.squares[yPosition][xPosition], XToggleSquare) and self.isStanding():
-                self.floor.squares[yPosition][xPosition].toggle(self.floor)
+                self.floor.squares[yPosition][xPosition].toggle(screen)
+            if isinstance(self.floor.squares[yPosition][xPosition], HideSquare) and not(self.floor.squares[yPosition][xPosition].enabled):
+                self.gameLose()
+                return False
+            if isinstance(self.floor.squares[yPosition][xPosition], NoneSquare) and not(isinstance(self.floor.squares[yPosition][xPosition], HideSquare)):
+                self.gameLose()
+                return False
         return None
 
     def gameWin(self):

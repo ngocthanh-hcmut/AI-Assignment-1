@@ -20,3 +20,4 @@ class Block:
     def render(self, screen):
         for square in self.currentSquare:
             pygame.draw.rect(screen, self.color, pygame.rect.Rect(square["xPosition"]*Square.width, square["yPosition"]*Square.height, Square.width, Square.height))
+            pygame.display.update(pygame.rect.Rect(square["xPosition"]*Square.width, square["yPosition"]*Square.height, Square.width, Square.height))
