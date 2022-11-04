@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 
 from Square.Square import Square
@@ -16,6 +17,7 @@ class Block:
         self.currentSquare = [
             dict(xPosition = xPosition, yPosition = yPosition)
         ]
+        self.color = pygame.Color(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
     def render(self, screen):
         for square in self.currentSquare:

@@ -77,14 +77,14 @@ def developing():
                 if event.key == pygame.K_RIGHT:
                     state.moveRight()
                 if event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]:
-                    state.render(screen, oldSquares)
+                    state.clearAndRender(screen, oldSquares, True)
                     state.checkGameStatus(screen)
         
         if state.status == "win" or state.status == "lose":
             running = False
 
 def geneticAgorithm(level, screen):
-    agorithm = GeneticAgorithm(level)
+    agorithm = GeneticAgorithm(level, sharedFloor)
     thread = threading.Thread(target=agorithm.execute, args=(screen, ))
     thread.start()
     while not(agorithm.stopExecute):
