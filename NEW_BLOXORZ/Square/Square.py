@@ -12,6 +12,9 @@ class Square:
         self.xPosition = xPosition
         self.yPosition = yPosition
 
+    def __eq__(self, other):
+        return self.xPosition == other.xPosition and self.yPosition == other.yPosition
+        
     def render(self, screen):
         # vẽ cái nền
         pygame.draw.rect(screen, self.color, pygame.rect.Rect(self.xPosition*self.width, self.yPosition*self.height, self.width, self.height))

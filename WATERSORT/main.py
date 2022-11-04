@@ -1,7 +1,10 @@
 from input import *
-import depthFirstSearch
+from output import *
+from depthFirstSearch import *
 
 initState = readInput()
 
-depthFirstSearch(initState)
+resultState = depthFirstSearch(initState)
+
+printPath(resultState)
 

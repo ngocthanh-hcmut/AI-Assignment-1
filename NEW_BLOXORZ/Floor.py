@@ -80,6 +80,9 @@ class Floor:
         self.floorWidth = len(self.squares[0]) * Square.width
         self.floorHeight = len(self.squares) * Square.height
 
+    def __eq__(self, other):
+        return self.squares == other.squares
+        
     def render(self, screen):
         for SquareRow in self.squares:
             for Square in SquareRow:

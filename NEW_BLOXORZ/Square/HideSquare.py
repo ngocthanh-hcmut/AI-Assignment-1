@@ -8,6 +8,13 @@ class HideSquare(NoneSquare):
         super().__init__(xPosition, yPosition)
         self.enabled = enable
 
+    def __eq__(self, other):
+        sp = super().__eq__(other)
+        if sp and (self.enabled == other.enabled):
+            return True
+        else:
+            return False
+        
     def render(self, screen):
         # print("rendering")
         if self.enabled:

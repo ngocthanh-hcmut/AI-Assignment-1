@@ -19,6 +19,14 @@ class Block:
         ]
         self.color = pygame.Color(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
+    def __eq__(self, other):
+        if len(self.currentSquare) == len(other.currentSquare):
+            if  ((len(self.currentSquare) == 1 and self.currentSquare == other.currentSquare) or
+                (len(self.currentSquare) == 2 and (self.currentSquare == other.currentSquare or self.currentSquare == other.currentSquare.reverse()))):
+                return True
+        else:
+            return False
+        
     def render(self, screen):
         for square in self.currentSquare:
             pygame.draw.rect(screen, self.color, pygame.rect.Rect(square["xPosition"]*Square.width, square["yPosition"]*Square.height, Square.width, Square.height))

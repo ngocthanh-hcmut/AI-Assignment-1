@@ -1,7 +1,7 @@
 from ds import * 
 
 def readInput():
-    input = open("Input/1.txt", "r").readlines()
+    input = open("Input/10", "r").readlines()
     
     for i in range(len(input)):
         input[i] = input[i].split(" ")
@@ -9,7 +9,10 @@ def readInput():
     capacity = len(input[0])
     
     for i in range(len(input)):
-        input[i][:] = (value for value in input[i] if (value != "_" and value != "_\n"))
+        input[i][-1] = input[i][-1].strip()
+    
+    for i in range(len(input)):
+        input[i][:] = (value for value in input[i] if value != "_")
         
     glasses = []
     for glass in input:
