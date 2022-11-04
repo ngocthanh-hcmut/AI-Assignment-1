@@ -1,7 +1,7 @@
 from ds import * 
 
 def readInput():
-    input = open("Input/5.txt", "r").readlines()
+    input = open("Input/10", "r").readlines()
     
     for i in range(len(input)):
         input[i] = input[i].split(" ")
