@@ -1,5 +1,5 @@
-from os import stat
 from ds import *
+from output import *
     
 def depthFirstSearch(initState):
     states = [initState]
