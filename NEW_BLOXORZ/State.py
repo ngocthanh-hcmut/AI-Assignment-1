@@ -112,7 +112,7 @@ class State:
                 newSquare = dict(xPosition = xPositionMax + 1, yPosition = self.block.currentSquare[0]["yPosition"])
                 self.block.currentSquare = [newSquare]
 
-    def generateChildren(self):
+    def generateChildren(self, screen):
         children = []
         
         stateUp = copy.deepcopy(self)
@@ -131,22 +131,22 @@ class State:
         stateRight.moveRight()
         stateRight.parent = self
         
-        if stateUp.checkGameStatus() != False:
+        if stateUp.checkGameStatus(screen) != False:
             children.append(stateUp)
             
-        if stateDown.checkGameStatus() != False:
+        if stateDown.checkGameStatus(screen) != False:
             children.append(stateDown)
         
-        if stateLeft.checkGameStatus() != False:
+        if stateLeft.checkGameStatus(screen) != False:
             children.append(stateLeft)
             
-        if stateRight.checkGameStatus() != False:
+        if stateRight.checkGameStatus(screen) != False:
             children.append(stateRight)
             
         return children
         
         
-    def checkGameStatus(self, screen = None):
+    def checkGameStatus(self, screen):
         for square in self.block.currentSquare:
             xPosition = square["xPosition"]
             yPosition = square["yPosition"]
@@ -185,3 +185,4 @@ class State:
             for square in squareRow:
                 square.render(screen)
 
+    def print(self): pass

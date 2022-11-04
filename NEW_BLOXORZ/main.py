@@ -105,7 +105,20 @@ def breadthFirstSearch(state):
         breadthFirstSearch(state.parent)
     state.renderFloor(screen)
     state.renderBlock(screen)
-    
+    # floor = Floor(level)
+    # block = Block(floor.startSquare.xPosition, floor.startSquare.yPosition)
+    # state = State(block, floor)
+    # state.renderFloor(screen)
+    # state.renderBlock(screen)
+    next = False
+    while not next:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                next = True
+            if event.type == pygame.KEYDOWN:
+                next = True
+                
+
     
     # while not(state.parent == None):
         # state.renderFloor(screen)
@@ -121,4 +134,4 @@ if gameMode == 2:
 if gameMode == 3:
     developing()
 if gameMode == 4:
-    breadthFirstSearch(level, screen)
+    breadthFirstSearch(state)

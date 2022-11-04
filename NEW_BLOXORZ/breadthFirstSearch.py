@@ -8,20 +8,20 @@ def breadthFirstSearch(level, screen):
     block = Block(floor.startSquare.xPosition, floor.startSquare.yPosition)
     initState = State(block, floor)
     
-    states = queue.Queue()
-    states.put(initState)
+    states = [initState]
     visited = []
     while states:
-        currentState = states.get()
+        currentState = states.pop(0)
         visited.append(currentState)
         
-        if currentState.checkGameStatus() == True and currentState.status == "win": 
+        if currentState.checkGameStatus(screen) == True and currentState.status == "win":
+            print("solution found") 
             return currentState
         
-        children = currentState.generateChildren()
+        children = currentState.generateChildren(screen)
         for child in children:
             if child not in visited:
-                states.put(child)
+                states.append(child)
                 
 
     
