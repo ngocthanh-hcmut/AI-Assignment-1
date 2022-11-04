@@ -82,9 +82,10 @@ def getHScore(glass):
 class State:
     
     def __init__(self, glasses, parent = None):
-        self.glasses = glasses
+        self.glasses = sorted(glasses)
+        # self.glasses = glasses
         self.parent = parent
-        
+    
     def __eq__(self, other):
         self.glasses
         other.glasses
