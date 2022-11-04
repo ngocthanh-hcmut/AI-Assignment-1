@@ -1,4 +1,5 @@
 import copy
+import math
 from queue import PriorityQueue
 
 
@@ -64,26 +65,26 @@ def pourWater(source, destination):
 def getHScore(glass):
     lenColors = len(glass.colors)
     if (lenColors == 0):
-        return 1
+        return -1
     elif (lenColors == 1):
         return 0
     score = 0
     for i in range(0,lenColors - 1):
         if glass.colors[i] == glass.colors[i+1]:
-            score += (glass.capacity - i)
-        else:
             score -= (glass.capacity - i)
+        else:
+            score += (glass.capacity - i)
     return score
 
 
+    
 
 class State:
     
     def __init__(self, glasses, parent = None):
-        self.glasses = sorted(glasses)
-        # self.glasses = glasses
+        self.glasses = glasses
         self.parent = parent
-    
+        
     def __eq__(self, other):
         self.glasses
         other.glasses
@@ -120,11 +121,13 @@ class State:
                     
         return children
     
+
 class heurState(State):
-    def ___init__(self, glasses):
-        super().__init__(glasses)
-        self.gScore = 0
-        self.fScore = self.heuristicEvaluate(glasses)
+    def __init__(self, glasses):
+        super().__init__(glasses,None)
+        self.gScore = math.inf
+        self.hScore = self.heuristicEvaluate()
+        self.fScore = math.inf
         
     def heuristicEvaluate(self):
         sum = 0
@@ -132,6 +135,11 @@ class heurState(State):
         for i in  range(0, numOfGlasses):
             sum += getHScore(self.glasses[i])
         return sum
+    
+    def updateScores(self, ParentsgScore,disFromParent=0):
+        self.gScore = ParentsgScore + disFromParent
+        self.hScore = self.heuristicEvaluate()
+        self.fScore = self.gScore + self.hScore
             
             
     
@@ -139,16 +147,38 @@ class heurState(State):
         return self.fScore < other.fScore
     
     def __eq__(self, other):
-        # return self.fScore == other.fScore
-        # return super().__eq__(other)
-        if len(self.glasses) != len(self.glasses):
-            return False
-        else:
-            for i in range(0,len(self.glasses)):
-                self.glasses[i] 
+        return super().__eq__(other)
     
     def __ne__(self,other):
         return not self.__eq__(other)
+    
+    def generateChildren(self):
+        children = []
+        
+        for i in range(0, len(self.glasses) - 1):
+            for j in range(i + 1, len(self.glasses)):                
+                source = self.glasses[i]
+                destination = self.glasses[j]                
+                if canBePoured(source, destination):                    
+                    newState = copy.deepcopy(self)
+                    pourWater(newState.glasses[i], newState.glasses[j])
+                    newState.parent = self
+                    newState.glasses.sort()
+                    newState.updateScores(self.gScore,1)
+                    children.append(newState)
+                    
+                source = self.glasses[j]
+                destination = self.glasses[i]                
+                if canBePoured(source, destination):
+                    newState = copy.deepcopy(self)
+                    pourWater(newState.glasses[j], newState.glasses[i])
+                    newState.parent = self
+                    newState.glasses.sort()
+                    newState.updateScores(self.gScore,1)
+                    children.append(newState) 
+                    
+        return children
+        
 
 class OpenQueue:
     def __init__(self):
