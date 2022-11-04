@@ -1,7 +1,7 @@
 from ds import * 
 
-def readInput():
-    input = open("Input/10", "r").readlines()
+def readInput(fileNum):
+    input = open("Input/{}".format(str(fileNum)), "r").readlines()
     
     for i in range(len(input)):
         input[i] = input[i].split(" ")
@@ -18,5 +18,6 @@ def readInput():
     for glass in input:
         glasses.append(Glass(capacity, glass))
     
-    return State(glasses)
+    # return State(glasses)
+    return heurState(glasses)
         

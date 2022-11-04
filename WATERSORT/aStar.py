@@ -1,17 +1,17 @@
-from queue import PriorityQueue
+from ds import *
 
 def aStarSearch(start):
-    Openlst = PriorityQueue()
-    Closedlst = list()
+    Openlst = OpenQueue()
+    Closedlst = []
     
     start.parent = None
     start.gScore = 0
     start.fScore = start.heuristicEvaluate()
     
     Openlst.put(start)
-    
     while not Openlst.empty():
-        cur = Openlst.get()[1]
+
+        cur = Openlst.get()
         if cur.isLevelComplete():
             return cur
         Closedlst.append(cur)
@@ -24,8 +24,9 @@ def aStarSearch(start):
                 child.parent = cur
                 child.gScore = tentative_gScore
                 child.fScore = tentative_gScore + child.heuristicEvaluate()
-                if (child.fScore,child) not in Openlst:
-                    Openlst.put(child)
+                if not Openlst.contains(child):
+                    Openlst.put(child)                    
+
                     
     return False
             

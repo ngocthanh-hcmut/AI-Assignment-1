@@ -13,8 +13,9 @@ def printState(state):
         print("\t".join([str(color) for color in colors]))
 
         
-def printPath(state):
+def printPath(state,i):
     if (state.parent):
-        printPath(state.parent)
-    printState(state)
-    print("--------------------------------------------------------")
+        i = printPath(state.parent,i+1)
+    # printState(state)
+    # print("--------------------------------------------------------")
+    return i

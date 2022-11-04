@@ -165,7 +165,7 @@ class heurState(State):
                     pourWater(newState.glasses[i], newState.glasses[j])
                     newState.parent = self
                     newState.glasses.sort()
-                    newState.updateScores(self.gScore,1)
+                    newState.updateScores(math.inf,1)
                     children.append(newState)
                     
                 source = self.glasses[j]
@@ -175,7 +175,7 @@ class heurState(State):
                     pourWater(newState.glasses[j], newState.glasses[i])
                     newState.parent = self
                     newState.glasses.sort()
-                    newState.updateScores(self.gScore,1)
+                    newState.updateScores(math.inf,1)
                     children.append(newState) 
                     
         return children
