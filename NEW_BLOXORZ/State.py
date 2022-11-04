@@ -1,4 +1,5 @@
 
+import copy
 from Square.HideSquare import HideSquare
 from Square.CircleToggleSquare import CircleToggleSquare
 from Square.XToggleSquare import XToggleSquare
@@ -16,6 +17,12 @@ class State:
         self.status = ""
         self.parent = parent
 
+    def __eq__(self, other):
+        return self.block == other.block and self.floor == other.floor
+     
+    def loadState(self):
+        self.floor.loadMap()
+        
     def isStanding(self):
         return True if len(self.block.currentSquare) == 1 else False
 
@@ -105,6 +112,40 @@ class State:
                 newSquare = dict(xPosition = xPositionMax + 1, yPosition = self.block.currentSquare[0]["yPosition"])
                 self.block.currentSquare = [newSquare]
 
+    def generateChildren(self):
+        children = []
+        
+        stateUp = copy.deepcopy(self)
+        stateUp.moveUp()
+        stateUp.parent = self
+        
+        stateDown = copy.deepcopy(self)
+        stateDown.moveDown()
+        stateDown.parent = self
+        
+        stateLeft = copy.deepcopy(self)
+        stateLeft.moveLeft()
+        stateLeft.parent = self
+        
+        stateRight = copy.deepcopy(self)
+        stateRight.moveRight()
+        stateRight.parent = self
+        
+        if stateUp.checkGameStatus() != False:
+            children.append(stateUp)
+            
+        if stateDown.checkGameStatus() != False:
+            children.append(stateDown)
+        
+        if stateLeft.checkGameStatus() != False:
+            children.append(stateLeft)
+            
+        if stateRight.checkGameStatus() != False:
+            children.append(stateRight)
+            
+        return children
+        
+        
     def checkGameStatus(self, screen = None):
         for square in self.block.currentSquare:
             xPosition = square["xPosition"]
@@ -129,7 +170,7 @@ class State:
                 self.gameLose()
                 return False
         return None
-
+    
     def gameWin(self):
         self.status = "win"
 

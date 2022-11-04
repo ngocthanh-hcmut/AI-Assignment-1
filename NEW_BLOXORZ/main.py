@@ -2,6 +2,7 @@
 # Đây là file trung tâm của chương trình
 ###
 import threading
+from time import sleep
 import pygame
 from GeneticAgorithm import GeneticAgorithm
 
@@ -9,6 +10,7 @@ from Block.Block import Block
 from Floor import Floor
 from State import State
 from StateGenetic import StateGenetic
+from breadthFirstSearch import breadthFirstSearch as bfs
 
 print("Input number level you want to play:")
 level = int(input())
@@ -16,6 +18,7 @@ level = int(input())
 print("Select mode of the game:")
 print("[2] I want to use genetic agorithm.")
 print("[3] Developing.")
+print("[4] Bfs.")
 print("Your choice: ")
 gameMode = int(input())
 sharedFloor = Floor(level)
@@ -95,7 +98,21 @@ def geneticAgorithm(level, screen):
         if not(thread.is_alive()) and not(agorithm.stopExecute):
             thread = threading.Thread(target=agorithm.execute, args=(screen,))
             thread.start()
-        
+
+state = bfs(level, screen)
+def breadthFirstSearch(state):
+    if state.parent:
+        breadthFirstSearch(state.parent)
+    state.renderFloor(screen)
+    state.renderBlock(screen)
+    
+    
+    # while not(state.parent == None):
+        # state.renderFloor(screen)
+        # state.renderBlock(screen)
+        # state = state.parent
+        # sleep(0.5)
+    
 
 if gameMode == 1:
     playByMySelf()
@@ -103,3 +120,5 @@ if gameMode == 2:
     geneticAgorithm(level, screen)
 if gameMode == 3:
     developing()
+if gameMode == 4:
+    breadthFirstSearch(level, screen)
