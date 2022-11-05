@@ -196,22 +196,6 @@ class OpenQueue:
     
     def contains(self,state):
         return state in self.queue.queue
-    
-    def update(self, updatedState):
-        if self.queue.empty() or not self.contains(updatedState):
-            return False
-        tmplst =  []
-        while not self.queue.empty():
-            tmpState = self.queue.get()
-            if (updatedState != tmpState):
-                tmplst.append(tmpState)
-            else:
-                tmplst.append(updatedState)
-                break
-        for i in range(0,len(tmplst)):
-            self.queue.put(tmplst[i])
-        
-        return True
             
     
         
