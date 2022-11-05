@@ -9,9 +9,9 @@ from StateGenetic import StateGenetic
 
 class GeneticAgorithm:
     DNA_LENGTH = 30
-    PUPOLATION = 40
+    PUPOLATION = 100
     MUTATE_NUMBER = 10
-    DNA_LENGTH_TO_MUTATE = 5
+    DNA_LENGTH_TO_MUTATE = 3
 
     def __init__(self, level, floor) -> None:
         self.states = []
@@ -23,6 +23,7 @@ class GeneticAgorithm:
         self.setSquareScore(floor)
         self.generatePopulation()
         self.totalScore = 0
+        self.solution = None
 
     def generatePopulation(self):
         for i in range(self.PUPOLATION):
@@ -32,27 +33,29 @@ class GeneticAgorithm:
             state.DNA = [random.randint(1, 4) for i in range(self.DNA_LENGTH)]
             self.states.append(state)
 
-    def execute(self, screen):
+    def execute(self, screen=None):
+        if self.solution != None: 
+            self.stopExecute = True
+            return
         self.generation += 1
         print("Thriving in generation ", self.generation)
         executor = ThreadPoolExecutor(max_workers=self.PUPOLATION)
         futures = [executor.submit(state.thrive, screen) for state in self.states]
         done, not_done = wait(futures, return_when=ALL_COMPLETED)
+        for future in done:
+            if future.result():
+                print("Solution found")
+                self.solution = future.result()
+                print(self.solution)
+                self.stopExecute = True
+                return future.result()
+
         print("generation done thriving")
         self.calculateFitnessScore()
         self.calculateSelectionRate()
-        # print(self.scoreMap)
-        # for i in range(len(self.states)):
-        #     print("state ", i, ": score=", self.states[i].fitnessScore, "DNA= ", self.states[i].DNA , "selectionRate=", self.states[i].selectionRate)
-        # self.crossOver(self.makeSelection())
-        # print("crossover")
-        # for i in range(len(self.states)):
-        #     print("state ", i, ": score=", self.states[i].fitnessScore, "DNA= ", self.states[i].DNA , "selectionRate=", self.states[i].selectionRate, "position=", self.states[i].block.currentSquare, "status=", self.states[i].status)
-        # print("make selection")
-        # for dna in self.makeSelection():
-        #     print(dna)
         self.crossOver(self.makeSelection())
         self.mutate()
+        return None
     
     
     def makeScoreMap(self, floor):
@@ -77,7 +80,7 @@ class GeneticAgorithm:
     def setSquareScore(self, floor):
         centerX = floor.holeSquare.xPosition
         centerY = floor.holeSquare.yPosition
-        maxScore = (len(floor.squares) + len(floor.squares[0])) + 10
+        maxScore = (len(floor.squares) + len(floor.squares[0]))
         self.scoreMap[centerY][centerX] = maxScore
         self.setScore(maxScore)
         
@@ -108,7 +111,7 @@ class GeneticAgorithm:
                 x = position["xPosition"]
                 y = position["yPosition"]
                 score = self.scoreMap[y][x] if score < self.scoreMap[y][x] else score
-            state.fitnessScore = score * 3
+            state.fitnessScore = score * 4
             self.totalScore += score
 
     def calculateSelectionRate(self):
@@ -131,7 +134,7 @@ class GeneticAgorithm:
         return selection
 
     def crossOver(self, selection):
-        self.states = []
+        # self.states = []
         i = 0
         # print("cross over")
         while i < len(selection):
@@ -147,14 +150,17 @@ class GeneticAgorithm:
                 else:
                     dna1.append(me[j])
                     dna2.append(cha[j])
-            floor1 = Floor(self.level)
-            block1 = Block(floor1.startSquare.xPosition, floor1.startSquare.yPosition)
-            state1 = StateGenetic(block1, floor1, dna1)
-            floor2 = Floor(self.level)
-            block2 = Block(floor2.startSquare.xPosition, floor2.startSquare.yPosition)
-            state2 = StateGenetic(block2, floor2, dna2)
-            self.states.append(state1)
-            self.states.append(state2)
+            # floor1 = Floor(self.level)
+            # block1 = Block(floor1.startSquare.xPosition, floor1.startSquare.yPosition)
+            # state1 = StateGenetic(block1, floor1, dna1)
+            # floor2 = Floor(self.level)
+            # block2 = Block(floor2.startSquare.xPosition, floor2.startSquare.yPosition)
+            # state2 = StateGenetic(block2, floor2, dna2)
+            # self.states.append(state1)
+            # self.states.append(state2)
+            self.states[i].reset(dna1)
+            if i+1 < len(self.states):
+                self.states[i+1].reset(dna2)
             i += 2
         
         
@@ -170,3 +176,9 @@ class GeneticAgorithm:
             return beforDot + 1
         else:
             return beforDot
+
+    def showSolution(self, screen, level):
+        floor = Floor(level)
+        block = Block(floor.startSquare.xPosition, floor.startSquare.yPosition)
+        state = StateGenetic(block, floor, self.solution)
+        state.thrive(screen, block = True)

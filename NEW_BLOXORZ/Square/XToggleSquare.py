@@ -35,7 +35,8 @@ class XToggleSquare(Square):
         # print("opening")
         for i in range(len(self.targets)):
             self.targets[i].enabled = not(self.targets[i].enabled)
-            self.targets[i].render(screen)
+            if screen:
+                self.targets[i].render(screen)
 
 
     def closeTarget(self, screen = None):
@@ -43,7 +44,8 @@ class XToggleSquare(Square):
         # print("closing")
         for i in range(len(self.targets)):
             self.targets[i].enabled = not(self.targets[i].enabled)
-            self.targets[i].render(screen)
+            if screen:
+                self.targets[i].render(screen)
 
             
     def toggle(self, screen = None):

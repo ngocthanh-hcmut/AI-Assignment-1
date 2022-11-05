@@ -2,6 +2,7 @@
 # Đây là file trung tâm của chương trình
 ###
 import threading
+from ReturnValueThread import ReturnValueThread
 from time import sleep
 import pygame
 from GeneticAgorithm import GeneticAgorithm
@@ -26,7 +27,7 @@ sharedFloor = Floor(level)
 # initial the pygame
 pygame.init()
 #create the screen
-screen = pygame.display.set_mode((sharedFloor.floorWidth, sharedFloor.floorHeight))
+screen = pygame.display.set_mode((sharedFloor.floorWidth, sharedFloor.floorHeight), pygame.SHOWN)
 #title and caption
 pygame.display.set_caption("Bloxorz")
 icon = pygame.image.load('image/icon.png')
@@ -88,7 +89,7 @@ def developing():
 
 def geneticAgorithm(level, screen):
     agorithm = GeneticAgorithm(level, sharedFloor)
-    thread = threading.Thread(target=agorithm.execute, args=(screen, ))
+    thread = ReturnValueThread(target=agorithm.execute, args=(None, ))
     thread.start()
     while not(agorithm.stopExecute):
         for event in pygame.event.get():
@@ -96,10 +97,27 @@ def geneticAgorithm(level, screen):
                 agorithm.stopExecute = True
         
         if not(thread.is_alive()) and not(agorithm.stopExecute):
-            thread = threading.Thread(target=agorithm.execute, args=(screen,))
+            thread = threading.Thread(target=agorithm.execute, args=(None,))
             thread.start()
+            thread.join()
+    
+    print("press space bar to see solution")
 
-state = bfs(level, screen)
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    print("showing solution")
+                    thread = threading.Thread(target=agorithm.showSolution, args=(screen, level))
+                    thread.start()
+                    # agorithm.showSolution(screen, level)
+                    # running = False
+
+
+# state = bfs(level, screen)
 def breadthFirstSearch(state):
     if state.parent:
         breadthFirstSearch(state.parent)
@@ -117,15 +135,6 @@ def breadthFirstSearch(state):
                 next = True
             if event.type == pygame.KEYDOWN:
                 next = True
-                
-
-    
-    # while not(state.parent == None):
-        # state.renderFloor(screen)
-        # state.renderBlock(screen)
-        # state = state.parent
-        # sleep(0.5)
-    
 
 if gameMode == 1:
     playByMySelf()
