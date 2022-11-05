@@ -62,7 +62,7 @@ The following tools were used in this project:
 
 - [Python](https://python.org/)
 - [Pygame Lib](https://pygame.org/)
-- [Colored Lib] (https://pypi.org/project/colored/)
+- [Colored Lib](https://pypi.org/project/colored/)
 
 ## :white_check_mark: Requirements ##
 
