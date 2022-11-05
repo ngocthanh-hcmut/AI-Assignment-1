@@ -101,8 +101,8 @@ $ python3 main.py
 Select Algorithm
  1. A*
  2. Depth first search
-Your select =  ......
-Select testcase 1 - 40: .....
+Your select =  [your input]
+Select testcase 1 - 40: [your input]
 ```
 
 <!-- # The server will initialize in the <http://localhost:3000> -->
