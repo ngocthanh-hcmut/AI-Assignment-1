@@ -1,0 +1,168 @@
+step: 0:
+
+_         _         yellow    cyan      red       red       blue      cyan      grey      
+_         _         yellow    yellow    cyan      pink      cyan      orange    orange    
+_         _         red       yellow    grey      grey      blue      orange    pink      
+_         _         blue      blue      grey      orange    pink      pink      red       
+------------------------------------------------------------------------------------------
+
+step: 1:
+
+_         _         cyan      red       red       blue      cyan      grey      _         
+_         _         yellow    cyan      pink      cyan      orange    orange    _         
+_         red       yellow    grey      grey      blue      orange    pink      yellow    
+_         blue      blue      grey      orange    pink      pink      red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 2:
+
+_         _         cyan      _         red       blue      cyan      grey      _         
+_         red       yellow    cyan      pink      cyan      orange    orange    _         
+_         red       yellow    grey      grey      blue      orange    pink      yellow    
+_         blue      blue      grey      orange    pink      pink      red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 3:
+
+_         cyan      _         red       blue      cyan      grey      _         _         
+_         yellow    cyan      pink      cyan      orange    orange    _         _         
+_         yellow    grey      grey      blue      orange    pink      red       yellow    
+blue      blue      grey      orange    pink      pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 4:
+
+_         cyan      _         red       _         cyan      grey      _         _         
+_         yellow    cyan      pink      cyan      orange    orange    _         _         
+blue      yellow    grey      grey      blue      orange    pink      red       yellow    
+blue      blue      grey      orange    pink      pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 5:
+
+_         cyan      cyan      red       _         cyan      grey      _         _         
+_         yellow    cyan      pink      _         orange    orange    _         _         
+blue      yellow    grey      grey      blue      orange    pink      red       yellow    
+blue      blue      grey      orange    pink      pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 6:
+
+_         cyan      cyan      red       _         cyan      grey      _         _         
+blue      yellow    cyan      pink      _         orange    orange    _         _         
+blue      yellow    grey      grey      _         orange    pink      red       yellow    
+blue      blue      grey      orange    pink      pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 7:
+
+_         cyan      cyan      _         _         cyan      grey      _         _         
+blue      yellow    cyan      pink      _         orange    orange    red       _         
+blue      yellow    grey      grey      _         orange    pink      red       yellow    
+blue      blue      grey      orange    pink      pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 8:
+
+_         _         cyan      cyan      pink      cyan      grey      _         _         
+_         blue      yellow    cyan      pink      orange    orange    red       _         
+_         blue      yellow    grey      grey      orange    pink      red       yellow    
+_         blue      blue      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 9:
+
+_         cyan      _         _         pink      cyan      grey      _         _         
+blue      yellow    _         _         pink      orange    orange    red       _         
+blue      yellow    cyan      grey      grey      orange    pink      red       yellow    
+blue      blue      cyan      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 10:
+
+_         _         _         _         pink      cyan      grey      _         _         
+blue      yellow    cyan      _         pink      orange    orange    red       _         
+blue      yellow    cyan      grey      grey      orange    pink      red       yellow    
+blue      blue      cyan      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 11:
+
+_         _         _         _         pink      cyan      grey      _         yellow    
+_         blue      cyan      _         pink      orange    orange    red       yellow    
+_         blue      cyan      grey      grey      orange    pink      red       yellow    
+blue      blue      cyan      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 12:
+
+_         _         _         _         pink      cyan      _         _         yellow    
+_         blue      cyan      grey      pink      orange    orange    red       yellow    
+_         blue      cyan      grey      grey      orange    pink      red       yellow    
+blue      blue      cyan      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 13:
+
+_         _         cyan      _         pink      _         _         _         yellow    
+_         blue      cyan      grey      pink      orange    orange    red       yellow    
+_         blue      cyan      grey      grey      orange    pink      red       yellow    
+blue      blue      cyan      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 14:
+
+_         _         cyan      _         pink      orange    _         _         yellow    
+_         blue      cyan      grey      pink      orange    _         red       yellow    
+_         blue      cyan      grey      grey      orange    pink      red       yellow    
+blue      blue      cyan      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 15:
+
+_         _         cyan      _         _         orange    pink      _         yellow    
+_         blue      cyan      grey      _         orange    pink      red       yellow    
+_         blue      cyan      grey      grey      orange    pink      red       yellow    
+blue      blue      cyan      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 16:
+
+_         _         cyan      grey      _         orange    pink      _         yellow    
+_         blue      cyan      grey      _         orange    pink      red       yellow    
+_         blue      cyan      grey      _         orange    pink      red       yellow    
+blue      blue      cyan      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 17:
+
+_         _         cyan      grey      orange    _         pink      _         yellow    
+_         blue      cyan      grey      orange    _         pink      red       yellow    
+_         blue      cyan      grey      orange    _         pink      red       yellow    
+blue      blue      cyan      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 18:
+
+_         _         cyan      grey      orange    pink      _         _         yellow    
+_         blue      cyan      grey      orange    pink      _         red       yellow    
+_         blue      cyan      grey      orange    pink      _         red       yellow    
+blue      blue      cyan      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 19:
+
+_         blue      cyan      grey      orange    pink      _         _         yellow    
+_         blue      cyan      grey      orange    pink      _         red       yellow    
+_         blue      cyan      grey      orange    pink      _         red       yellow    
+_         blue      cyan      grey      orange    pink      red       red       yellow    
+------------------------------------------------------------------------------------------
+
+step: 20:
+
+_         _         blue      cyan      grey      orange    pink      red       yellow    
+_         _         blue      cyan      grey      orange    pink      red       yellow    
+_         _         blue      cyan      grey      orange    pink      red       yellow    
+_         _         blue      cyan      grey      orange    pink      red       yellow    
+------------------------------------------------------------------------------------------
+
