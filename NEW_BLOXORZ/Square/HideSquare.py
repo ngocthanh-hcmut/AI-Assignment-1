@@ -7,6 +7,7 @@ class HideSquare(NoneSquare):
     def __init__(self, xPosition, yPosition, enable) -> None:
         super().__init__(xPosition, yPosition)
         self.enabled = enable
+        self.enabledAtDefault = enable
 
     def __eq__(self, other):
         sp = super().__eq__(other)

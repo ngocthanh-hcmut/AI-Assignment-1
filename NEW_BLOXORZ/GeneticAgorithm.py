@@ -8,10 +8,10 @@ from StateGenetic import StateGenetic
 
 
 class GeneticAgorithm:
-    DNA_LENGTH = 30
-    PUPOLATION = 100
-    MUTATE_NUMBER = 0
-    DNA_LENGTH_TO_MUTATE = 0
+    DNA_LENGTH = 40
+    PUPOLATION = 300
+    MUTATE_NUMBER = 10
+    DNA_LENGTH_TO_MUTATE = 10
 
     def __init__(self, level, floor) -> None:
         self.states = []
@@ -50,7 +50,7 @@ class GeneticAgorithm:
                 self.stopExecute = True
                 return future.result()
 
-        print("generation done thriving")
+        # print("generation done thriving")
         self.calculateFitnessScore()
         self.calculateSelectionRate()
         self.crossOver(self.makeSelection())
@@ -80,7 +80,7 @@ class GeneticAgorithm:
     def setSquareScore(self, floor):
         centerX = floor.holeSquare.xPosition
         centerY = floor.holeSquare.yPosition
-        maxScore = (len(floor.squares) + len(floor.squares[0]))
+        maxScore = (len(floor.squares) + len(floor.squares[0])) + 6
         self.scoreMap[centerY][centerX] = maxScore
         self.setScore(maxScore)
         
@@ -134,9 +134,7 @@ class GeneticAgorithm:
         return selection
 
     def crossOver(self, selection):
-        # self.states = []
         i = 0
-        # print("cross over")
         while i < len(selection):
             dna1 = []
             dna2 = []
@@ -150,14 +148,7 @@ class GeneticAgorithm:
                 else:
                     dna1.append(me[j])
                     dna2.append(cha[j])
-            # floor1 = Floor(self.level)
-            # block1 = Block(floor1.startSquare.xPosition, floor1.startSquare.yPosition)
-            # state1 = StateGenetic(block1, floor1, dna1)
-            # floor2 = Floor(self.level)
-            # block2 = Block(floor2.startSquare.xPosition, floor2.startSquare.yPosition)
-            # state2 = StateGenetic(block2, floor2, dna2)
-            # self.states.append(state1)
-            # self.states.append(state2)
+
             self.states[i].reset(dna1)
             if i+1 < len(self.states):
                 self.states[i+1].reset(dna2)
@@ -165,7 +156,7 @@ class GeneticAgorithm:
         
         
     def mutate(self):
-        
+        if self.MUTATE_NUMBER == 0: return
         for i in range(self.MUTATE_NUMBER):
             positionToMutate = random.randint(0, self.PUPOLATION-1)
             self.states[positionToMutate].mutate(self.DNA_LENGTH_TO_MUTATE, self.DNA_LENGTH)
@@ -183,3 +174,4 @@ class GeneticAgorithm:
         block = Block(floor.startSquare.xPosition, floor.startSquare.yPosition)
         state = StateGenetic(block, floor, self.solution)
         state.thrive(screen, block = True)
+

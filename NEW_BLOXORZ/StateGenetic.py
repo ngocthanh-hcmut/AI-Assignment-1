@@ -157,6 +157,7 @@ class StateGenetic(State):
 
 
     def reset(self, dna):
+        self.floor.reset()
         self.block.currentSquare = [
             dict(xPosition=self.floor.startSquare.xPosition, yPosition=self.floor.startSquare.yPosition)
         ]

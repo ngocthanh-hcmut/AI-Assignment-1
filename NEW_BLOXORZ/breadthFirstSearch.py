@@ -14,6 +14,10 @@ def breadthFirstSearch(level, screen):
     while states:
         currentState = states.pop(0)
         visited.append(currentState)
+
+        # currentState.renderFloor(screen)
+        # currentState.renderBlock(screen)
+        # sleep(1)
         
         if currentState.checkGameStatus(screen) == True and currentState.status == "win":
             print("solution found") 
@@ -21,9 +25,6 @@ def breadthFirstSearch(level, screen):
         
         children = currentState.generateChildren(screen)
         for child in children:
-            child.renderFloor(screen)
-            child.renderBlock(screen)
-            sleep(2)
             if child not in visited:
                 states.append(child)
                 
