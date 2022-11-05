@@ -117,7 +117,7 @@ def geneticAgorithm(level, screen):
                     # running = False
 
 
-# state = bfs(level, screen)
+state = bfs(level, screen)
 def breadthFirstSearch(state):
     if state.parent:
         breadthFirstSearch(state.parent)

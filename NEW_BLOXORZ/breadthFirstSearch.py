@@ -1,4 +1,5 @@
 import queue
+from time import sleep
 from State import *
 from Block.Block import *
 from Floor import *
@@ -20,6 +21,9 @@ def breadthFirstSearch(level, screen):
         
         children = currentState.generateChildren(screen)
         for child in children:
+            child.renderFloor(screen)
+            child.renderBlock(screen)
+            sleep(2)
             if child not in visited:
                 states.append(child)
                 

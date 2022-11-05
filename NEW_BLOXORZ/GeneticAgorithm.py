@@ -10,8 +10,8 @@ from StateGenetic import StateGenetic
 class GeneticAgorithm:
     DNA_LENGTH = 30
     PUPOLATION = 100
-    MUTATE_NUMBER = 10
-    DNA_LENGTH_TO_MUTATE = 3
+    MUTATE_NUMBER = 0
+    DNA_LENGTH_TO_MUTATE = 0
 
     def __init__(self, level, floor) -> None:
         self.states = []
@@ -165,6 +165,7 @@ class GeneticAgorithm:
         
         
     def mutate(self):
+        
         for i in range(self.MUTATE_NUMBER):
             positionToMutate = random.randint(0, self.PUPOLATION-1)
             self.states[positionToMutate].mutate(self.DNA_LENGTH_TO_MUTATE, self.DNA_LENGTH)
