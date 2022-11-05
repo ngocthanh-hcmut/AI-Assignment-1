@@ -98,6 +98,11 @@ $ python main.py
 ```bash
 $ cd WATERSORT
 $ python3 main.py
+Select Algorithm
+ 1. A*
+ 2. Depth first search
+Your select =  ......
+Select testcase 1 - 40: .....
 ```
 
 <!-- # The server will initialize in the <http://localhost:3000> -->
