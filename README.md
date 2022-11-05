@@ -66,14 +66,18 @@ The following tools were used in this project:
 
 ## :white_check_mark: Requirements ##
 
-Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Python](https://python.org/) installed.
+Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Python3.9](https://python.org/) installed.
 
 ## :checkered_flag: Starting ##
 
 # Clone this project
+```bash
 $ git clone https://github.com/{{ngocthanh-hcmut}}/ai-introduction-assignment1
+```
 
-# Installation library
+# Run Program
+Before running you have to installed [Python3.9](https://python.org/), [Pygame Lib](https://pygame.org/) and [Colored Lib](https://pypi.org/project/colored/)
+
 
 
 # Access
