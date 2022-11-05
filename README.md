@@ -87,9 +87,9 @@ $ pip install colored
 $ cd AI-Introduction-Assignment1
 ```
 
-### Run the genetic Agorithm 
+# Playing Bloxorz
 ```bash
-$ cd geneticAgorithm
+$ cd NEW_BLOXORZ
 $ python main.py
 ```
 :heavy_check_mark: For modify proram parameter: check file geneticAgorithm/readme.md;
