@@ -77,12 +77,14 @@ $ git clone https://github.com/{{ngocthanh-hcmut}}/ai-introduction-assignment1
 
 # Run Program
 Before running you have to installed [Python3.9](https://python.org/), [Pygame Lib](https://pygame.org/) and [Colored Lib](https://pypi.org/project/colored/)
-
+```bash
+$ pip install colored
+```
 
 
 # Access
 ```bash
-$ cd ai-introduction-assignment1
+$ cd AI-Introduction-Assignment1
 ```
 
 ### Run the genetic Agorithm 
@@ -92,8 +94,11 @@ $ python main.py
 ```
 :heavy_check_mark: For modify proram parameter: check file geneticAgorithm/readme.md;
 
-# Run other agorithm:
-
+# Playing Water Sort - Color Puzzle:
+```bash
+$ cd WATERSORT
+$ python3 main.py
+```
 
 <!-- # The server will initialize in the <http://localhost:3000> -->
 
