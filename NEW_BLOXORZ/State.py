@@ -119,6 +119,10 @@ class State:
         stateUp.moveUp()
         stateUp.parent = self
         
+        stateRight = copy.deepcopy(self)
+        stateRight.moveRight()
+        stateRight.parent = self
+        
         stateDown = copy.deepcopy(self)
         stateDown.moveDown()
         stateDown.parent = self
@@ -126,10 +130,6 @@ class State:
         stateLeft = copy.deepcopy(self)
         stateLeft.moveLeft()
         stateLeft.parent = self
-        
-        stateRight = copy.deepcopy(self)
-        stateRight.moveRight()
-        stateRight.parent = self
         
         if stateUp.checkGameStatus(screen) != False:
             children.append(stateUp)
