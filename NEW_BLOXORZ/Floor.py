@@ -32,7 +32,7 @@ class Floor:
 
     def loadMap(self):
         # đọc dữ liệu từ file input
-        file = open("input/Map/level"+str(self.level)+".txt", "r")
+        file = open("Input/Map/level"+str(self.level)+".txt", "r")
         lines = file.readlines()
         for i in range(len(lines)):
             lines[i] = lines[i].split()

@@ -30,7 +30,7 @@ pygame.init()
 screen = pygame.display.set_mode((sharedFloor.floorWidth, sharedFloor.floorHeight), pygame.SHOWN)
 #title and caption
 pygame.display.set_caption("Bloxorz")
-icon = pygame.image.load('image/icon.png')
+icon = pygame.image.load('Image/icon.png')
 pygame.display.set_icon(icon)
 screen.fill(pygame.Color(0, 0, 0))
 sharedFloor.render(screen)
@@ -117,7 +117,7 @@ def geneticAgorithm(level, screen):
                     # running = False
 
 
-# state = bfs(level, screen)
+state = bfs(level, screen)
 def breadthFirstSearch(state):
     if state.parent:
         breadthFirstSearch(state.parent)

@@ -12,7 +12,7 @@ def breadthFirstSearch(level, screen):
     states = [initState]
     visited = []
     while states:
-        currentState = states.pop(0)
+        currentState = states.pop()
         visited.append(currentState)
 
         # currentState.renderFloor(screen)

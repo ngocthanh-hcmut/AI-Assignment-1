@@ -1,43 +1,26 @@
-from time import sleep
-from Floor import *
-from State import *
-from Block.Block import *
+import os, os.path
+from input import *
+from output import *
+from depthFirstSearch import *
 
-# ------------------------------------------
-sharedFloor = Floor(2)
+initState = readInput(1)
 
-# initial the pygame
-pygame.init()
-#create the screen
-screen = pygame.display.set_mode((sharedFloor.floorWidth, sharedFloor.floorHeight), pygame.SHOWN)
-#title and caption
-pygame.display.set_caption("Bloxorz")
-icon = pygame.image.load('image/icon.png')
-pygame.display.set_icon(icon)
-screen.fill(pygame.Color(0, 0, 0))
-# ---------------------------------------------------
+# s1 = copy.deepcopy(initState)
+# s1.block.moveRight()
+# s1.block.moveRight()
+# # s1.block.moveDown()
 
-floor = Floor(2)
-block = Block(floor.startSquare.xPosition, floor.startSquare.yPosition)
-state1 = State(block, floor)
-state1.moveUp()
-state1.checkGameStatus(screen)
-state1.renderFloor(screen)
-state1.renderBlock(screen)
-sleep(2)
-state1.moveRight()
-state1.checkGameStatus(screen)
-state1.renderFloor(screen)
-state1.renderBlock(screen)
-sleep(3)
+# s2 = copy.deepcopy(initState)
+# s2.block.moveDown()
+# s2.block.moveRight()
+# s2.block.moveRight()
+# s2.block.moveRight()
+# s2.block.moveUp()
 
-state2 = copy.deepcopy(state1)
-state2.moveRight()
-# state2.checkGameStatus(screen)
-state2.renderFloor(screen)
-state2.renderBlock(screen)
-sleep(3)
 
-print(state1 == state2)
+# print(s1 == s2)
 
-# print([dict{}])
+depthFirstSearch(initState)
+
+for i in visited:
+    printState(i)
