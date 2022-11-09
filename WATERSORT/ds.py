@@ -143,7 +143,9 @@ class heurState(State):
         return self.fScore < other.fScore
     
     def __eq__(self, other):
-        return super().__eq__(other)
+        tmpSelfSortedGlass = sorted(self.glasses)
+        tmpOtherSortedGlass = sorted(other.glasses)
+        return tmpSelfSortedGlass == tmpOtherSortedGlass
     
     def __ne__(self,other):
         return not self.__eq__(other)
@@ -190,6 +192,7 @@ class OpenQueue:
         return self.queue.get()
     
     def contains(self,state):
+        
         return state in self.queue.queue
             
     
