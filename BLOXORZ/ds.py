@@ -27,12 +27,20 @@ class WeakSquare(Square):
         super().__init__()
         
 class XSwitch(Square):
-    def __init__(self) -> None:
+    def __init__(self, toggleSquares) -> None:
         super().__init__()
+        self.toggleSquares = []
+    
+    def addSquare(self, position):
+        self.toggleSquares.append(position)
     
 class OSwitch(Square):
     def __init__(self) -> None:
         super().__init__()
+        self.toggleSquares = []
+        
+    def addSquare(self, position):
+        self.toggleSquares.append(position)
 
 class Hole(Square):
     def __init__(self) -> None:
@@ -142,7 +150,15 @@ class State:
         return self.block == other.block and self.floor == other.floor
         # return self.block == other.block
 
-    def activeBridge(self): pass
+    def activeBridge(self):
+        x1 = self.block.position1.x
+        y1 = self.block.position1.y
+        
+        x2 = self.block.position2.x
+        y2 = self.block.position2.y
+        
+        squares = self.floor.squares
+        
 
     def isValidState(self):
         x1 = self.block.position1.x

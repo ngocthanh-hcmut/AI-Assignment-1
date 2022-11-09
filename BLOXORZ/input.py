@@ -1,9 +1,9 @@
 from ds import *
 
 def readInput(level):
-    file = open("Input/" + str(level), "r")
-
-    squares = file.readlines()
+    floorInput = open("Input/" + str(level), "r")
+        
+    squares = floorInput.readlines()
     for i in range(len(squares)):
         squares[i] = squares[i].split()
 
@@ -26,6 +26,23 @@ def readInput(level):
             elif squares[x][y] == 'w':
                 squares[x][y] = WeakSquare()
     
+    linkInput = open("Input/" + str(level) + "link", "r")
+    links = linkInput.readlines()
+    
+    for i in range(len(links)):
+        links[i] = links[i].split()
+
+    for i in range(len(links)):
+        for j in range(len(links[i])):
+            links[i][j] = links[i][j].split(',')
+            
+    for i in range(len(links)):
+        x = links[i][0][0]
+        y = links[i][0][1]
+        
+        for j in range(1, len(links[i])):
+            squares[x][y].addSquares(Position(int(links[i][j][0]), int(links[i][j][1])))
+        
     floor = Floor(squares, width, height, hole)
     block = Block(position1, position2)
 

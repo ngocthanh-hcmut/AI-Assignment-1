@@ -2,25 +2,16 @@ import os, os.path
 from input import *
 from output import *
 from depthFirstSearch import *
+from ds import *
 
-initState = readInput(1)
+linkInput = open("Input/" + str(2) + "link", "r")
+links = linkInput.readlines()
+    
+for i in range(len(links)):
+    links[i] = links[i].split()
 
-# s1 = copy.deepcopy(initState)
-# s1.block.moveRight()
-# s1.block.moveRight()
-# # s1.block.moveDown()
+for i in range(len(links)):
+    for j in range(len(links[i])):
+        links[i][j] = links[i][j].split(',')
 
-# s2 = copy.deepcopy(initState)
-# s2.block.moveDown()
-# s2.block.moveRight()
-# s2.block.moveRight()
-# s2.block.moveRight()
-# s2.block.moveUp()
-
-
-# print(s1 == s2)
-
-depthFirstSearch(initState)
-
-for i in visited:
-    printState(i)
+print(links)
