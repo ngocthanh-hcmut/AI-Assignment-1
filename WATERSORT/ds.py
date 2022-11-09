@@ -190,6 +190,7 @@ class OpenQueue:
         return self.queue.get()
     
     def contains(self,state):
+        
         return state in self.queue.queue
             
     
