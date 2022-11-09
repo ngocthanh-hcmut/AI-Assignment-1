@@ -24,8 +24,6 @@ def matchColor(character):
         return fg('white') + character
 
     
-
-
 def printPath(state):
     if state.parent:
         printPath(state.parent)
@@ -66,15 +64,15 @@ def printState(state):
             elif isinstance(squares[x][y], ToggleSquare) and not squares[x][y].isOpen:
                 squares[x][y] = '0'
 
-    lines = []
-    for row in squares:
-        lines.append(' '.join(str(x) for x in row))
-    print('\n'.join(lines))
+    # lines = []
+    # for row in squares:
+    #     lines.append(' '.join(str(x) for x in row))
+    # print('\n'.join(lines))
     
-    seperate = ''
-    for i in range(2*len(squares[0])):
-        seperate += '-'
-    print(seperate)
+    # seperate = ''
+    # for i in range(2*len(squares[0])):
+    #     seperate += '-'
+    # print(seperate)
 
 
 

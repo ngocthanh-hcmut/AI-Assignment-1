@@ -21,7 +21,7 @@ def depthFirstSearch(initState):
             if child not in visited:
                 states.append(child)
         
-        print(count)
-        count += 1
+        # print(count)
+        # count += 1
         printState(currentState)
     
