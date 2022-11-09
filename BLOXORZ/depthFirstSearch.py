@@ -2,11 +2,10 @@ from time import sleep
 from ds import *
 from output import *
 
-visited = []
 def depthFirstSearch(initState):
     states = [initState]
+    visited = []
     
-
     while states:
     # for i in range(10):
         currentState = states.pop()

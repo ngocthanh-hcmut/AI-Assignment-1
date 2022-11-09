@@ -14,17 +14,32 @@ def readInput(level):
         for y in range(width):
             if squares[x][y] == '1':
                 squares[x][y] = NormalSquare()
+
             elif squares[x][y] == '0':
                 squares[x][y] = NoneSquare()
+
             elif squares[x][y] == 's':
                 position1 = Position(x, y)
                 position2 = Position(x, y)
                 squares[x][y] = NormalSquare()
+
             elif squares[x][y] == 'h':
                 hole = Position(x, y)
                 squares[x][y] = Hole()
+
             elif squares[x][y] == 'w':
                 squares[x][y] = WeakSquare()
+
+            elif squares[x][y] == 'o':
+                squares[x][y] = OSwitch()
+
+            elif squares[x][y] == 'x':
+                squares[x][y] = XSwitch()
+
+            elif squares[x][y] == 't0':
+                squares[x][y] = ToggleSquare(False)
+            elif squares[x][y] == 't1':
+                squares[x][y] = ToggleSquare(True)
     
     linkInput = open("Input/" + str(level) + "link", "r")
     links = linkInput.readlines()
@@ -37,11 +52,13 @@ def readInput(level):
             links[i][j] = links[i][j].split(',')
             
     for i in range(len(links)):
-        x = links[i][0][0]
-        y = links[i][0][1]
+        x = int(links[i][0][0])
+        y = int(links[i][0][1])
         
         for j in range(1, len(links[i])):
-            squares[x][y].addSquares(Position(int(links[i][j][0]), int(links[i][j][1])))
+            xToggle = int(links[i][j][0])
+            yToggle = int(links[i][j][1])
+            squares[x][y].toggleSquares.append(squares[xToggle][yToggle])
         
     floor = Floor(squares, width, height, hole)
     block = Block(position1, position2)

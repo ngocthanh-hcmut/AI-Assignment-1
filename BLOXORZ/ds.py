@@ -27,20 +27,27 @@ class WeakSquare(Square):
         super().__init__()
         
 class XSwitch(Square):
-    def __init__(self, toggleSquares) -> None:
+    def __init__(self) -> None:
         super().__init__()
         self.toggleSquares = []
-    
-    def addSquare(self, position):
-        self.toggleSquares.append(position)
+
+    def toggle(self):
+        for square in self.toggleSquares:
+            square.isOpen = not square.isOpen  
     
 class OSwitch(Square):
     def __init__(self) -> None:
         super().__init__()
-        self.toggleSquares = []
-        
-    def addSquare(self, position):
-        self.toggleSquares.append(position)
+        self.toggleSquares = []      
+
+    def toggle(self):
+        for square in self.toggleSquares:
+            square.isOpen = not square.isOpen  
+
+class ToggleSquare(Square):
+    def __init__(self, isOpen):
+        super().__init__()
+        self.isOpen = isOpen
 
 class Hole(Square):
     def __init__(self) -> None:
@@ -150,7 +157,7 @@ class State:
         return self.block == other.block and self.floor == other.floor
         # return self.block == other.block
 
-    def activeBridge(self):
+    def checkBridge(self):
         x1 = self.block.position1.x
         y1 = self.block.position1.y
         
@@ -158,7 +165,16 @@ class State:
         y2 = self.block.position2.y
         
         squares = self.floor.squares
-        
+
+        if not self.block.isStanding():
+            if isinstance(squares[x1][y1], OSwitch):
+                squares[x1][y1].toggle()
+            if isinstance(squares[x2][y2], OSwitch):
+                squares[x2][y2].toggle()
+
+        elif isinstance(squares[x1][y1], OSwitch) or isinstance(squares[x1][y1], XSwitch):
+            squares[x1][y1].toggle()
+            
 
     def isValidState(self):
         x1 = self.block.position1.x
@@ -171,11 +187,16 @@ class State:
         height = self.floor.height
         squares = self.floor.squares
 
-        if x1 < 0 or x2 < 0 or x1 >= height or x2 >= height or y1 < 0 or y2 < 0 or y1 >= width or y2 >= width:
-            return False # Check out of floor
+        if x1 < 0 or x2 < 0 or x1 >= height or x2 >= height or y1 < 0 or y2 < 0 or y1 >= width or y2 >= width: # Check out of floor
+            return False 
+
         elif isinstance(squares[x1][y1], NoneSquare) or isinstance(squares[x2][y2], NoneSquare): # Check falls
             return False
-        elif self.block.isStanding() and isinstance(squares[x1][y1], WeakSquare):
+
+        elif self.block.isStanding() and isinstance(squares[x1][y1], WeakSquare): # Check stand on weak square
+            return False
+
+        elif (isinstance(squares[x1][y1], ToggleSquare) and not squares[x1][y1].isOpen) or (isinstance(squares[x2][y2], ToggleSquare) and not squares[x2][y2].isOpen): # Check falls in closed toggle square
             return False 
         
         return True
@@ -183,22 +204,22 @@ class State:
     def generateChildren(self):
         up = copy.deepcopy(self)
         up.block.moveUp()
-        up.parent = self
 
         right = copy.deepcopy(self)
         right.block.moveRight()
-        right.parent = self
 
         down = copy.deepcopy(self)
         down.block.moveDown()
-        down.parent = self
 
         left = copy.deepcopy(self)
         left.block.moveLeft()
-        left.parent = self
 
         children = [up, right, down, left]
         children = [child for child in children if child.isValidState()]
+        
+        for i in range(len(children)):
+            children[i].parent = self
+            children[i].checkBridge()
 
         return children
     
