@@ -1,4 +1,5 @@
 from ds import *
+from os.path import exists
 
 def readInput(level):
     floorInput = open("Input/" + str(level), "r")
@@ -41,25 +42,28 @@ def readInput(level):
             elif squares[x][y] == 't1':
                 squares[x][y] = ToggleSquare(True)
     
-    linkInput = open("Input/" + str(level) + "link", "r")
-    links = linkInput.readlines()
     
-    for i in range(len(links)):
-        links[i] = links[i].split()
+    if exists("Input/" + str(level) + "link"):
 
-    for i in range(len(links)):
-        for j in range(len(links[i])):
-            links[i][j] = links[i][j].split(',')
+        linkInput = open("Input/" + str(level) + "link", "r")
+        links = linkInput.readlines()
+        
+        for i in range(len(links)):
+            links[i] = links[i].split()
+
+        for i in range(len(links)):
+            for j in range(len(links[i])):
+                links[i][j] = links[i][j].split(',')
+                
+        for i in range(len(links)):
+            x = int(links[i][0][0])
+            y = int(links[i][0][1])
             
-    for i in range(len(links)):
-        x = int(links[i][0][0])
-        y = int(links[i][0][1])
-        
-        for j in range(1, len(links[i])):
-            xToggle = int(links[i][j][0])
-            yToggle = int(links[i][j][1])
-            squares[x][y].toggleSquares.append(squares[xToggle][yToggle])
-        
+            for j in range(1, len(links[i])):
+                xToggle = int(links[i][j][0])
+                yToggle = int(links[i][j][1])
+                squares[x][y].toggleSquares.append(squares[xToggle][yToggle])
+            
     floor = Floor(squares, width, height, hole)
     block = Block(position1, position2)
 
