@@ -82,14 +82,11 @@ def getHScore(glass):
 class State:
     
     def __init__(self, glasses, parent = None):
-        self.glasses = sorted(glasses)
-        # self.glasses = glasses
+        self.glasses = glasses
         self.parent = parent
     
     def __eq__(self, other):
-        self.glasses
-        other.glasses
-        return (self.glasses == other.glasses)
+        return (self.glasses == sorted(other.glasses))
         
     def isLevelComplete(self):
         for glass in self.glasses:
@@ -108,7 +105,6 @@ class State:
                     newState = copy.deepcopy(self)
                     pourWater(newState.glasses[i], newState.glasses[j])
                     newState.parent = self
-                    newState.glasses.sort()
                     children.append(newState)
                     
                 source = self.glasses[j]
@@ -117,7 +113,6 @@ class State:
                     newState = copy.deepcopy(self)
                     pourWater(newState.glasses[j], newState.glasses[i])
                     newState.parent = self
-                    newState.glasses.sort()
                     children.append(newState) 
                     
         return children
@@ -164,7 +159,7 @@ class heurState(State):
                     newState = copy.deepcopy(self)
                     pourWater(newState.glasses[i], newState.glasses[j])
                     newState.parent = self
-                    newState.glasses.sort()
+                    # newState.glasses.sort()
                     newState.updateScores(math.inf,1)
                     children.append(newState)
                     
@@ -174,7 +169,7 @@ class heurState(State):
                     newState = copy.deepcopy(self)
                     pourWater(newState.glasses[j], newState.glasses[i])
                     newState.parent = self
-                    newState.glasses.sort()
+                    # newState.glasses.sort()
                     newState.updateScores(math.inf,1)
                     children.append(newState) 
                     

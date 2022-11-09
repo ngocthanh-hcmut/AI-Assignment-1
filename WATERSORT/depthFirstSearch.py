@@ -6,7 +6,9 @@ def depthFirstSearch(initState):
     visited = []
     while states:
         currentState = states.pop()
-        visited.append(currentState)
+        sortedState = copy.deepcopy(currentState)
+        sortedState.glasses.sort()
+        visited.append(sortedState)
         
         if currentState.isLevelComplete(): 
             return currentState
