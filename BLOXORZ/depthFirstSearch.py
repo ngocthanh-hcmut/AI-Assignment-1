@@ -6,11 +6,13 @@ def depthFirstSearch(initState):
     states = [initState]
     visited = []
     
+    count = 1
     while states:
-    # for i in range(10):
         currentState = states.pop()
-        visited.append(currentState)
-
+        temp = copy.deepcopy(currentState)
+        visited.append(temp)
+        # visited.append(currentState)
+        
         if currentState.checkGameStatus():
             return currentState
         
@@ -18,6 +20,8 @@ def depthFirstSearch(initState):
         for child in children:
             if child not in visited:
                 states.append(child)
-                
-
+        
+        print(count)
+        count += 1
+        printState(currentState)
     

@@ -32,17 +32,25 @@ def readInput(level):
                 squares[x][y] = WeakSquare()
 
             elif squares[x][y] == 'o':
-                squares[x][y] = OSwitch()
+                squares[x][y] = OSwitch('both')
+            elif squares[x][y] == 'o1':
+                squares[x][y] = OSwitch('open')
+            elif squares[x][y] == 'o0':
+                squares[x][y] = OSwitch('close')
 
             elif squares[x][y] == 'x':
                 squares[x][y] = XSwitch()
+            elif squares[x][y] == 'x1':
+                squares[x][y] = XSwitch('open')
+            elif squares[x][y] == 'x0':
+                squares[x][y] = XSwitch('close')
 
             elif squares[x][y] == 't0':
                 squares[x][y] = ToggleSquare(False)
             elif squares[x][y] == 't1':
                 squares[x][y] = ToggleSquare(True)
     
-    
+
     if exists("Input/" + str(level) + "link"):
 
         linkInput = open("Input/" + str(level) + "link", "r")

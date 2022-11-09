@@ -21,33 +21,51 @@ class Square:
 class NormalSquare(Square):
     def __init__(self) -> None:
         super().__init__()
+    
+    def __eq__(self, other):
+        return type(self) == type(other)
 
 class WeakSquare(Square):
     def __init__(self) -> None:
         super().__init__()
         
 class XSwitch(Square):
-    def __init__(self) -> None:
+    def __init__(self, action = 'both') -> None:
         super().__init__()
         self.toggleSquares = []
+        self.action = action
 
     def toggle(self):
         for square in self.toggleSquares:
-            square.isOpen = not square.isOpen  
+            if self.action == 'open':
+                square.isOpen = True
+            elif self.action == 'close':
+                square.isOpen = False
+            elif self.action == 'both':
+                square.isOpen = not square.isOpen
     
 class OSwitch(Square):
-    def __init__(self) -> None:
+    def __init__(self, action = 'both') -> None:
         super().__init__()
-        self.toggleSquares = []      
+        self.toggleSquares = []
+        self.action = action
 
     def toggle(self):
         for square in self.toggleSquares:
-            square.isOpen = not square.isOpen  
+            if self.action == 'open':
+                square.isOpen = True
+            elif self.action == 'close':
+                square.isOpen = False
+            elif self.action == 'both':
+                square.isOpen = not square.isOpen 
 
 class ToggleSquare(Square):
     def __init__(self, isOpen):
         super().__init__()
         self.isOpen = isOpen
+    
+    def __eq__(self, other):
+        return super().__eq__(other) and self.isOpen == other.isOpen
 
 class Hole(Square):
     def __init__(self) -> None:

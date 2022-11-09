@@ -23,7 +23,10 @@ if algorithm == '1':
 elif algorithm == '2':
     result = depthFirstSearch(initState) 
     if (result):
+        print("Here is my solution:")
         printPath(result)
+        print("Solution found!")
+
     else:
         print('No solution found!') 
   

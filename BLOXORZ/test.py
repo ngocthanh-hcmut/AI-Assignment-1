@@ -4,14 +4,33 @@ from output import *
 from depthFirstSearch import *
 from ds import *
 
-linkInput = open("Input/" + str(2) + "link", "r")
-links = linkInput.readlines()
+initState = readInput(2)
+
+states = [initState]
+visited = []
+
+while states:
+# for i in range(200):
+    currentState = states.pop()
+    temp = copy.deepcopy(currentState)
+    visited.append(temp)
+    # visited.append(currentState)
+    if currentState.checkGameStatus():
+        printPath(currentState)
+        print("found")
+        break
     
-for i in range(len(links)):
-    links[i] = links[i].split()
+    children = currentState.generateChildren()
+    for child in children:
+        if child not in visited:
+            # print("not in")
+            states.append(child)
+        # else:
+            # print("in")
 
-for i in range(len(links)):
-    for j in range(len(links[i])):
-        links[i][j] = links[i][j].split(',')
+    printState(currentState)
 
-print(links)
+
+
+
+# print(links)
