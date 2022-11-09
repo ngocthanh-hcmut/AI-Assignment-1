@@ -22,10 +22,17 @@ class Floor:
         self.holeSquare: HoleSquare
         self.toggleSquares = []
         self.loadMap()
+    
+    def reset(self):
+        for i in range(len(self.squares)):
+            for j in range(len(self.squares[i])):
+                if isinstance(self.squares[i][j], HideSquare):
+                    # print("reset floor")
+                    self.squares[i][j].enabled = self.squares[i][j].enabledAtDefault
 
     def loadMap(self):
         # đọc dữ liệu từ file input
-        file = open("input/Map/level"+str(self.level)+".txt", "r")
+        file = open("Input/Map/level"+str(self.level)+".txt", "r")
         lines = file.readlines()
         for i in range(len(lines)):
             lines[i] = lines[i].split()

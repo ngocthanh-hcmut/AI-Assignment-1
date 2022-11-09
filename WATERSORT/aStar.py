@@ -26,8 +26,6 @@ def aStarSearch(start):
                 child.fScore = tentative_gScore + child.heuristicEvaluate()
                 if not Openlst.contains(child):
                     Openlst.put(child)                    
-
-                    
     return False
             
         

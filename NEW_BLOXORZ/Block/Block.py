@@ -22,8 +22,11 @@ class Block:
     def __eq__(self, other):
         if len(self.currentSquare) == len(other.currentSquare):
             if  ((len(self.currentSquare) == 1 and self.currentSquare == other.currentSquare) or
-                (len(self.currentSquare) == 2 and (self.currentSquare == other.currentSquare or self.currentSquare == other.currentSquare.reverse()))):
+                (len(self.currentSquare) == 2 and ((self.currentSquare[0] == other.currentSquare[0] and self.currentSquare[1] == other.currentSquare[1]) or 
+                                                    (self.currentSquare[0] == other.currentSquare[1] and self.currentSquare[1] == other.currentSquare[0])))):
                 return True
+            else:
+                return False
         else:
             return False
         
