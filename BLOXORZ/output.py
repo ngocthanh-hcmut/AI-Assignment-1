@@ -1,3 +1,4 @@
+from time import sleep
 from ds import *
 from colored import fg
 
@@ -28,6 +29,7 @@ def printPath(state):
     if state.parent:
         printPath(state.parent)
     printStateColor(state)
+    sleep(0.2)
 
 def printState(state):
     pos1 = state.block.position1
