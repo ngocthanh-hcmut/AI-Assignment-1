@@ -50,7 +50,7 @@ class GeneticAgorithm:
                 return future.result()
 
         # print("generation done thriving")
-        # self.calculateFitnessScore()
+        self.calculateTotalScore()
         self.calculateSelectionRate()
         self.crossOver(self.makeSelection())
         self.mutate()
@@ -102,16 +102,10 @@ class GeneticAgorithm:
                             self.scoreMap[i][j-1] = score -1
         self.setScore(score-1)
 
-    def calculateFitnessScore(self):
+    def calculateTotalScore(self):
         self.totalScore = 0
         for state in self.states:
-            score = 0
-            for position in state.block.currentSquare:
-                x = position["xPosition"]
-                y = position["yPosition"]
-                score = self.scoreMap[y][x] if score < self.scoreMap[y][x] else score
-            state.fitnessScore = score * 4
-            self.totalScore += score
+            self.totalScore += state.fitnessScore
 
     def calculateSelectionRate(self):
         for state in self.states:
@@ -129,8 +123,6 @@ class GeneticAgorithm:
                     break
                 else:
                     count = count + state.selectionRate
-        # while len(selection) < self.PUPOLATION:
-        #     selection.append([random.randint(1,3)] for i in range(self.PUPOLATION))
         return selection
 
     def crossOver(self, selection):
