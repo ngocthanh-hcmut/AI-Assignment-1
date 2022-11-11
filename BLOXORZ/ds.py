@@ -243,3 +243,12 @@ class State:
     
     def checkGameStatus(self):
         return self.block.isStanding() and self.block.position1 == self.floor.hole
+
+
+class Chromosome:
+    def __init__(self, length, DNAs = [], score = 0):
+        self.length = length
+        self.DNAs = DNAs
+        self.score = score
+        
+    

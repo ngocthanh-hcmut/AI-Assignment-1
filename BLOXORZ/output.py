@@ -24,6 +24,7 @@ def matchColor(character):
     elif character == '-':
         return fg('white') + character
 
+
     
 def printPath(state):
     if state.parent:
