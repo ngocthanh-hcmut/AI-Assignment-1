@@ -16,65 +16,45 @@ from Square.CircleToggleSquare import CircleToggleSquare
 
 class StateGenetic(State):
 
-    def __init__(self, block, Floor, DNA=None) -> None:
+    def __init__(self, block, Floor, scoreMap, DNA=None) -> None:
         super().__init__(block, Floor)
         self.selectionRate = 0
         self.fitnessScore = 0
         self.DNA = DNA
+        self.scoreMap = scoreMap
+        self.bestMoveIndex = 0
 
     def thrive(self, screen=None, block = False):
+        self.setFitnessScore(0)
+        
+        # py game ------
         if screen:
             self.clearAndRender(screen, None, True)
-        for move in self.DNA:
+        # -------
+
+        for i in range(len(self.DNA)):
+            if self.status == "lose" or self.status == "win":
+                break
             oldSquares = [dict(xPosition=a["xPosition"], yPosition=a["yPosition"]) for a in self.block.currentSquare]
-            
-            if self.status == "win":
-                if screen:
-                    self.clearAndRender(screen, None, True)
-                continue
-            if  self.status == "lose":
-                continue
-            
             if block:
                 sleep(0.5)
-            
-            if move == 1:
-                # print("moving up")
+            if self.DNA[i] == 1:
                 self.moveUp()
-            if move == 2:
-                # print("moving down")
-                self.moveDown()
-            if move == 3:
-                # print("moving left")
-                self.moveLeft()
-            if move == 4:
-                # print("moving right")
+            if self.DNA[i] == 2:
                 self.moveRight()
-            
-            self.checkGameStatus(screen)
-            
+            if self.DNA[i] == 3:
+                self.moveLeft()
+            if self.DNA[i] == 4:
+                self.moveDown()
+            self.checkGameStatus()
             if self.status == "":
-                if screen:
-                    self.clearAndRender(screen, oldSquares, True)
-            
-            if  self.status == "lose":
-                if screen:
-                    self.clearAndRender(screen, oldSquares, False)
-                self.block.currentSquare = oldSquares
-                return False
-                continue
+                self.setFitnessScore(i)
 
-            if self.status == "win":
-                if screen:
-                    self.clearAndRender(screen, oldSquares, True)
-                if block:
-                    sleep(0.5)
-                break
+            # pygame -----
+            if self.status == "" and screen:
+                self.clearAndRender(screen, oldSquares, True)
+            # ----
 
-
-        # print(self.block.currentSquare)
-        if screen:
-            self.clearAndRender(screen, self.block.currentSquare, False)
         if self.status == "win":
             return self.DNA
         else:
@@ -84,15 +64,11 @@ class StateGenetic(State):
         for square in self.block.currentSquare:
             xPosition = square["xPosition"]
             yPosition = square["yPosition"]
-            # print("current square: ", square, "xy=", xPosition, yPosition )
-            # print("width=",len(self.floor.squares[0]), "height=", len(self.floor.squares))
             if xPosition < 0 or yPosition < 0 or xPosition >= len(self.floor.squares[0]) or yPosition >= len(self.floor.squares):
                 self.gameLose()
-                # print("111111111111")
                 return False
             if isinstance(self.floor.squares[yPosition][xPosition], WeakSquare) and self.isStanding():
                 self.gameLose()
-                # print("22222222222")
                 return False
             if isinstance(self.floor.squares[yPosition][xPosition], HoleSquare) and self.isStanding():
                 self.gameWin()
@@ -103,11 +79,9 @@ class StateGenetic(State):
                 self.floor.squares[yPosition][xPosition].toggle(screen)
             if isinstance(self.floor.squares[yPosition][xPosition], HideSquare) and not(self.floor.squares[yPosition][xPosition].enabled):
                 self.gameLose()
-                # print("33333333333333")
                 return False
             if isinstance(self.floor.squares[yPosition][xPosition], NoneSquare) and not(isinstance(self.floor.squares[yPosition][xPosition], HideSquare)):
                 self.gameLose()
-                # print("444444444444")
                 return False
             
         return None
@@ -163,3 +137,12 @@ class StateGenetic(State):
         ]
         self.status = ""
         self.DNA = dna
+
+    def setFitnessScore(self, moveIndex):
+        score = 0
+        for position in self.block.currentPosition:
+            tmp = self.scoreMap[position["yPosition"]][position["xPosition"]]
+            score = tmp if tmp > score else score
+        if self.fitnessScore < score:
+            self.fitnessScore = score
+            self.bestMoveIndex = moveIndex

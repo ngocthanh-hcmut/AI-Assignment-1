@@ -10,8 +10,7 @@ from StateGenetic import StateGenetic
 class GeneticAgorithm:
     DNA_LENGTH = 40
     PUPOLATION = 300
-    MUTATE_NUMBER = 10
-    DNA_LENGTH_TO_MUTATE = 10
+    MUTATE_RATE = 10
 
     def __init__(self, level, floor) -> None:
         self.states = []
@@ -29,7 +28,7 @@ class GeneticAgorithm:
         for i in range(self.PUPOLATION):
             floor = Floor(self.level)
             block = Block(floor.startSquare.xPosition, floor.startSquare.yPosition)
-            state = StateGenetic(block, floor)
+            state = StateGenetic(block, floor, self.scoreMap)
             state.DNA = [random.randint(1, 4) for i in range(self.DNA_LENGTH)]
             self.states.append(state)
 
@@ -51,7 +50,7 @@ class GeneticAgorithm:
                 return future.result()
 
         # print("generation done thriving")
-        self.calculateFitnessScore()
+        # self.calculateFitnessScore()
         self.calculateSelectionRate()
         self.crossOver(self.makeSelection())
         self.mutate()
@@ -125,7 +124,8 @@ class GeneticAgorithm:
             count = 0
             for state in self.states:
                 if num <= count + state.selectionRate:
-                    selection.append(state.DNA)
+                    info = dict(dna=state.DNA, crossIndex=state.bestMoveIndex, score=state.fitnessScore)
+                    selection.append(info)
                     break
                 else:
                     count = count + state.selectionRate
@@ -138,9 +138,17 @@ class GeneticAgorithm:
         while i < len(selection):
             dna1 = []
             dna2 = []
-            cha = selection[i]
-            me = selection[i+1] if i+1 < len(selection) else selection[i]
-            crossPosition = random.randint(1, self.DNA_LENGTH-2)
+
+            cha = selection[i]["dna"]
+            me = selection[i+1]["dna"] if i+1 < len(selection) else selection[i]["dna"]
+
+            crossIndex1 = selection[i]["crossIndex"]
+            crossIndex2 = selection[i+1]["crossIndex"] if i+1 < len(selection) else selection[i]["crossIndex"]
+
+            score1 = selection[i]["score"]
+            score2 = selection[i+1]["score"] if i+1 < len(selection) else selection[i]["score"]
+
+            crossPosition = crossIndex1 if score1 > score2 else crossIndex2
             for j in range(self.DNA_LENGTH):
                 if j <=crossPosition:
                     dna1.append(cha[j])
@@ -156,10 +164,9 @@ class GeneticAgorithm:
         
         
     def mutate(self):
-        if self.MUTATE_NUMBER == 0: return
-        for i in range(self.MUTATE_NUMBER):
-            positionToMutate = random.randint(0, self.PUPOLATION-1)
-            self.states[positionToMutate].mutate(self.DNA_LENGTH_TO_MUTATE, self.DNA_LENGTH)
+        i = random.randint(0, 99)
+        if i >= self.MUTATE_RATE:
+            return
 
     def round(number):
         afterDot = number % 1
