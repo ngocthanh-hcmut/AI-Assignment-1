@@ -13,11 +13,12 @@ def breadthFirstSearch(level, screen):
     visited = []
     while states:
         currentState = states.pop()
-        visited.append(currentState)
+        temp = copy.deepcopy(currentState)
+        visited.append(temp)
 
-        currentState.renderFloor(screen)
-        currentState.renderBlock(screen)
-        sleep(1)
+        # currentState.renderFloor(screen)
+        # currentState.renderBlock(screen)
+        # sleep(1)
         
         if currentState.checkGameStatus(screen) == True and currentState.status == "win":
             print("solution found") 
