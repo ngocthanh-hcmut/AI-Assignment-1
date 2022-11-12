@@ -93,26 +93,6 @@ def geneticAgorithm(level, screen):
                     # agorithm.showSolution(screen, level)
                     # running = False
 
-
-# state = bfs(level, screen)
-def breadthFirstSearch(state):
-    if state.parent:
-        breadthFirstSearch(state.parent)
-    state.renderFloor(screen)
-    state.renderBlock(screen)
-    # floor = Floor(level)
-    # block = Block(floor.startSquare.xPosition, floor.startSquare.yPosition)
-    # state = State(block, floor)
-    # state.renderFloor(screen)
-    # state.renderBlock(screen)
-    next = False
-    while not next:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                next = True
-            if event.type == pygame.KEYDOWN:
-                next = True
-
 def test(level, screen):
     agorithm = GeneticAgorithm(level, sharedFloor)
     thread = ReturnValueThread(target=agorithm.execute, args=(None, ))
