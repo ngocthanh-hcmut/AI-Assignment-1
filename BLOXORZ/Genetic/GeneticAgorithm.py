@@ -1,5 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor, wait, ALL_COMPLETED
 import random
+from time import sleep
 from Block.Block import Block
 from Floor import Floor
 from Square.NoneSquare import NoneSquare
@@ -8,9 +9,9 @@ from StateGenetic import StateGenetic
 
 
 class GeneticAgorithm:
-    DNA_LENGTH = 40
-    PUPOLATION = 300
-    MUTATE_RATE = 10
+    DNA_LENGTH = 100  
+    PUPOLATION = 100
+    MUTATE_RATE = 5
 
     def __init__(self, level, floor) -> None:
         self.states = []
@@ -20,16 +21,18 @@ class GeneticAgorithm:
         self.generation = 0
         self.makeScoreMap(floor)
         self.setSquareScore(floor)
+        # self.setButtonScore(floor)
         self.generatePopulation()
         self.totalScore = 0
         self.solution = None
 
     def generatePopulation(self):
+        # print("genetic: generating population")
         for i in range(self.PUPOLATION):
             floor = Floor(self.level)
             block = Block(floor.startSquare.xPosition, floor.startSquare.yPosition)
-            state = StateGenetic(block, floor, self.scoreMap)
-            state.DNA = [random.randint(1, 4) for i in range(self.DNA_LENGTH)]
+            DNA = [random.randint(1, 4) for i in range(self.DNA_LENGTH)]
+            state = StateGenetic(block, floor, self.scoreMap, DNA, i)
             self.states.append(state)
 
     def execute(self, screen=None):
@@ -37,13 +40,13 @@ class GeneticAgorithm:
             self.stopExecute = True
             return
         self.generation += 1
-        print("Thriving in generation ", self.generation)
+        # print("Thriving in generation ", self.generation)
         executor = ThreadPoolExecutor(max_workers=self.PUPOLATION)
         futures = [executor.submit(state.thrive, screen) for state in self.states]
         done, not_done = wait(futures, return_when=ALL_COMPLETED)
         for future in done:
             if future.result():
-                print("Solution found")
+                print("Solution found at generation:", self.generation)
                 self.solution = future.result()
                 print(self.solution)
                 self.stopExecute = True
@@ -52,12 +55,21 @@ class GeneticAgorithm:
         # print("generation done thriving")
         self.calculateTotalScore()
         self.calculateSelectionRate()
+        # print(self.makeSelection())
         self.crossOver(self.makeSelection())
-        self.mutate()
+
+
+        # print("done thriving gen", self.generation,"with population: ")
+        # for state in self.states:
+        #     print("state", state.id, "dna:", state.DNA)
+        # # self.mutate()
+
+        # sleep(0.25)
         return None
     
     
     def makeScoreMap(self, floor):
+        print("genetic: Making score map")
         scoreMap = []
         for squareRow in floor.squares:
             scoreRow = []
@@ -82,6 +94,14 @@ class GeneticAgorithm:
         maxScore = (len(floor.squares) + len(floor.squares[0])) + 6
         self.scoreMap[centerY][centerX] = maxScore
         self.setScore(maxScore)
+
+    # def setButtonScore(self, floor):
+    #     for square in self.floor.toggleSquares:
+    #         x = square.xPosition
+    #         y = square.yPosition
+    #         self.scoreMap[y][x] = 3
+    #         self.setScore
+
         
     def setScore(self, score):
         if self.checkScoreMapFilled(): return
@@ -103,22 +123,29 @@ class GeneticAgorithm:
         self.setScore(score-1)
 
     def calculateTotalScore(self):
+        # print("genetic: calculate total score: ")
         self.totalScore = 0
         for state in self.states:
+            # print("state", state.id, "score =", state.fitnessScore)
             self.totalScore += state.fitnessScore
+        # print("total =", self.totalScore)
 
     def calculateSelectionRate(self):
+        # print("genetic: calculate selection rate")
         for state in self.states:
             state.selectionRate = round((state.fitnessScore / self.totalScore) * 100)
+            # print("state", state.id, "rate =", state.selectionRate)
 
     def makeSelection(self):
+        # print("genetic: making selection")
         selection = []
         for i in range(self.PUPOLATION):
             num = random.randint(0,99)
             count = 0
             for state in self.states:
                 if num <= count + state.selectionRate:
-                    info = dict(dna=state.DNA, crossIndex=state.bestMoveIndex, score=state.fitnessScore)
+                    info = dict(dna=state.DNA, crossIndex=state.longestMove, score=state.fitnessScore)
+                    # print("state", state.id, "dna:", info["dna"], "score =", state.fitnessScore)
                     selection.append(info)
                     break
                 else:
@@ -126,6 +153,7 @@ class GeneticAgorithm:
         return selection
 
     def crossOver(self, selection):
+        # print("genetic: crossing")
         i = 0
         while i < len(selection):
             dna1 = []
@@ -141,8 +169,9 @@ class GeneticAgorithm:
             score2 = selection[i+1]["score"] if i+1 < len(selection) else selection[i]["score"]
 
             crossPosition = crossIndex1 if score1 > score2 else crossIndex2
+            # print("pair", (i/2), "cross position =", crossPosition)
             for j in range(self.DNA_LENGTH):
-                if j <=crossPosition:
+                if j <= crossPosition:
                     dna1.append(cha[j])
                     dna2.append(me[j])
                 else:
@@ -150,15 +179,18 @@ class GeneticAgorithm:
                     dna2.append(cha[j])
 
             self.states[i].reset(dna1)
+            self.states[i].mutate(self.MUTATE_RATE, crossPosition+1)
             if i+1 < len(self.states):
                 self.states[i+1].reset(dna2)
             i += 2
         
         
-    def mutate(self):
-        i = random.randint(0, 99)
-        if i >= self.MUTATE_RATE:
-            return
+    # def mutate(self):
+    #     i = random.randint(0, 99)
+    #     if i >= self.MUTATE_RATE:
+    #         return
+    #     i = random.randint(0, len(self.states)-1)
+    #     self.states[i].mutate()
 
     def round(number):
         afterDot = number % 1
@@ -171,6 +203,6 @@ class GeneticAgorithm:
     def showSolution(self, screen, level):
         floor = Floor(level)
         block = Block(floor.startSquare.xPosition, floor.startSquare.yPosition)
-        state = StateGenetic(block, floor, self.solution)
+        state = StateGenetic(block, floor, self.scoreMap, self.solution)
         state.thrive(screen, block = True)
 
