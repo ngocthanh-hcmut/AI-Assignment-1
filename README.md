@@ -47,12 +47,11 @@
 
 ## :dart: About ##
 
-AI Assignment 1
+Solving Water Sort and Bloxorz problems.
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: Dept First Search Agorithm;\
-:heavy_check_mark: Breath First Search Agorithm;\
+:heavy_check_mark: Depth First Search Agorithm;\
 :heavy_check_mark: A* Agorithm;\
 :heavy_check_mark: Genetic Agorithm;
 
@@ -70,39 +69,16 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) an
 
 ## :checkered_flag: Starting ##
 
-# Clone this project
-```bash
-$ git clone https://github.com/{{ngocthanh-hcmut}}/ai-introduction-assignment1
-```
-
-# Run Program
-Before running you have to installed [Python3.9](https://python.org/), [Pygame Lib](https://pygame.org/) and [Colored Lib](https://pypi.org/project/colored/)
-```bash
-$ pip install colored
-```
-
-
-# Access
-```bash
-$ cd AI-Introduction-Assignment1
-```
 
 # Playing Bloxorz
 ```bash
-$ cd NEW_BLOXORZ
-$ python main.py
+
 ```
 :heavy_check_mark: For modify proram parameter: check file geneticAgorithm/readme.md;
 
 # Playing Water Sort - Color Puzzle:
 ```bash
-$ cd WATERSORT
-$ python3 main.py
-Select Algorithm
- 1. A*
- 2. Depth first search
-Your select =  [your input]
-Select testcase 1 - 40: [your input]
+
 ```
 
 <!-- # The server will initialize in the <http://localhost:3000> -->
