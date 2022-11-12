@@ -13,6 +13,9 @@ print("Available levels: 1,2,3,4,5,6,7,11,12,13,14,18,19.")
 testcase = input("\nPlease select a level: ")
 initState = readInput(testcase)
 
+import time
+
+start = time.time()
 print("Running...")
 result = depthFirstSearch(initState) 
 if (result):
@@ -21,5 +24,8 @@ if (result):
 
 else:
     print('No solution found!') 
+end = time.time()
+
+print("Running time =", end - start)
   
         

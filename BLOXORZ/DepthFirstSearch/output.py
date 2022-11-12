@@ -32,9 +32,11 @@ def makePath(state):
 
 def printPath(state):
     makePath(state)
+    step = 0
     for s in path:
+        print("Step", step)
+        step += 1
         printState(s)
-        sleep(0.1)
 
 def printState(state):
     pos1 = state.block.position1
