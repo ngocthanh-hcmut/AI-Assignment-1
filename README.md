@@ -55,19 +55,21 @@ Solving Water Sort and Bloxorz problems.
 :heavy_check_mark: A* Agorithm;\
 :heavy_check_mark: Genetic Agorithm;
 
+## :white_check_mark: Requirements ##
+
+Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Python3.9](https://python.org/) installed.
+
+
+
 ## :rocket: Technologies ##
 
-The following tools were used in this project:
+The following modules were used in this project:
 
 - [Python](https://python.org/)
 - [Pygame Lib](https://pygame.org/)
 - [Colored Lib](https://pypi.org/project/colored/)
 
-## :white_check_mark: Requirements ##
 
-Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Python3.9](https://python.org/) installed.
-
-## :checkered_flag: Starting ##
 
 
 # Playing Bloxorz
