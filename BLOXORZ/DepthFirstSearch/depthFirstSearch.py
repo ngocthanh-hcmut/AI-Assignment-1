@@ -8,7 +8,8 @@ def depthFirstSearch(initState):
     
     while states:
         currentState = states.pop()
-        visited.append(currentState)
+        state = copy.deepcopy(currentState)
+        visited.append(state)
         
         if currentState.checkGameStatus():
             return currentState
@@ -17,5 +18,7 @@ def depthFirstSearch(initState):
         for child in children:
             if child not in visited:
                 states.append(child)
+                
+        printS(currentState)
         
     
