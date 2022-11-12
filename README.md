@@ -60,7 +60,6 @@ Solving Water Sort and Bloxorz problems.
 Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Python3.9](https://python.org/) installed.
 
 
-
 ## :rocket: Technologies ##
 
 The following modules were used in this project:
@@ -70,23 +69,24 @@ The following modules were used in this project:
 - [Colored Lib](https://pypi.org/project/colored/)
 
 
-
-
-# Playing Bloxorz
+# Playing Bloxorz - Depth First Search
 ```bash
-
+$ cd BLOXORZ/DepthFirstSearch
+$ python main.py
 ```
-:heavy_check_mark: For modify proram parameter: check file geneticAgorithm/readme.md;
+
+# Playing Bloxorz - Genetic
+```bash
+$ cd BLOXORZ/Genetic
+$ python main.py
+```
 
 # Playing Water Sort - Color Puzzle:
 ```bash
-
+$ cd WATERSORT/
 ```
 
 <!-- # The server will initialize in the <http://localhost:3000> -->
 
-Made with :heart: by ShibaTeam
-
-&#xa0;
 
 <a href="#top">Back to top</a>
