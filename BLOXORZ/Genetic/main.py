@@ -12,8 +12,9 @@ from Floor import Floor
 from State import State
 from StateGenetic import StateGenetic
 
-print("Possible level: 1,2,3,4")
-print("Input number level you want to solve:")
+print("You are using Genetic Algorithm to solve BLOXORZ")
+print("Available levels: 1,2,3,4")
+print("Please select a level:")
 level = int(input())
 
 sharedFloor = Floor(level)
@@ -35,7 +36,7 @@ def run(level, screen):
     thread = ReturnValueThread(target=agorithm.execute, args=(None, ))
     thread.start()
     thread.join()
-    print("finding solution... It may took a while...")
+    print("Running...")
     while not(agorithm.stopExecute):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
